@@ -1,4 +1,106 @@
 #define _CRT_SECURE_NO_WARNINGS 1 
+//第1题
+//两数之和
+//给定一个整数数组nums和一个整数目标值target,
+//请你在该数组中找出和为目标值target的那两个整数,并返回它们的数组下标
+//你可以假设每种输入只会对应一个答案,并且你不能使用两次相同的元素。
+//你可以按任意顺序返回答案。
+//示例1:
+//输入:nums = [2, 7, 11, 15], target = 9
+//输出:[0, 1]
+//解释:因为nums[0] + nums[1] == 9,返回[0, 1]。
+//示例2:
+//输入:nums = [3, 2, 4], target = 6
+//输出:[1, 2]
+//示例3:
+//输入:nums = [3, 3], target = 6
+//输出:[0, 1]
+//提示:
+//2 <= nums.length <= 104
+//- 109 <= nums[i] <= 109
+//- 109 <= target <= 109
+//只会存在一个有效答案
+//int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
+//    int i = 0;
+//    for (i = 0;i < numsSize;i++)
+//    {
+//        int j = 0;
+//        for (j = i + 1;j < numsSize;j++)
+//        {
+//            if (nums[j] + nums[i] == target)
+//            {
+//                int* result = (int*)malloc(sizeof(int) * 2);
+//                if (result == NULL)
+//                {
+//                    *returnSize = 0;
+//                    return returnSize;
+//                }
+//                result[0] = i;
+//                result[1] = j;
+//                *returnSize = 2;
+//                return result;
+//            }
+//        }
+//    }
+//    *returnSize = 0;
+//    return NULL;
+//}
+
+
+//方法2
+//双指针
+//typedef struct nums {
+//    int value;
+//    int index;
+//}element;
+//int compare(const void* num1, const void* num2)
+//{
+//    return ((element*)num1)->value - ((element*)num2)->value;
+//}
+//int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
+//    //对数组排序
+//    element* Element = (element*)malloc(sizeof(element) * numsSize);
+//    int i = 0;
+//    for (i = 0;i < numsSize;i++)
+//    {
+//        Element[i].value = nums[i];
+//        Element[i].index = i;
+//    }
+//    qsort(Element, numsSize, sizeof(Element), compare);
+//    //使用双指针
+//    int left = 0;
+//    int right = numsSize - 1;
+//    int* result = (int*)malloc(sizeof(int) * 2);
+//    if (result == NULL)
+//    {
+//        *returnSize = 0;
+//        return NULL;
+//    }
+//    while (left < right)
+//    {
+//        int sum = Element[left].value + Element[right].value;
+//        if (sum == target)
+//        {
+//            result[0] = Element[left].index;
+//            result[1] = Element[right].index;
+//            *returnSize = 2;
+//            free(Element);
+//            return result;
+//        }
+//        else if (sum < target)
+//        {
+//            left++;
+//        }
+//        else {
+//            right--;
+//        }
+//    }
+//    free(Element);
+//    *returnSize = 0;
+//    return NULL;
+//}
+
+
 //第26题
 //删除有序数组中的重复项
 //给你一个非严格递增排列的数组nums,请你原地删除重复出现的元素,使每个元素只出现一次
@@ -22,24 +124,24 @@
 //- 104 <= nums[i] <= 104
 //nums已按非严格递增排列
 //方法1
-int removeDuplicates(int* nums, int numsSize)
-{
-    int left = 0;
-    int right = left + 1;
-    while (right < numsSize)
-    {
-        if (nums[left] == nums[right])
-        {
-            right++;
-        }
-        else
-        {
-            left++;
-            nums[left] = nums[right];
-        }
-    }
-    return left + 1;
-}
+//int removeDuplicates(int* nums, int numsSize)
+//{
+//    int left = 0;
+//    int right = left + 1;
+//    while (right < numsSize)
+//    {
+//        if (nums[left] == nums[right])
+//        {
+//            right++;
+//        }
+//        else
+//        {
+//            left++;
+//            nums[left] = nums[right];
+//        }
+//    }
+//    return left + 1;
+//}
 
 
 //方法2
