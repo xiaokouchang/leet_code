@@ -121,40 +121,83 @@
 //提示：
 //0 <= s.length <= 5 * 104
 //s由英文字母、数字、符号和空格组成
-//typedef struct lettle {
-//    char c;
-//    int index;
-//} lettle;
-//int compare(const void* a, const void* b) {
-//    return ((lettle*)a)->c - ((lettle*)b)->c;
-//}
-//int lengthOfLongestSubstring(char* s) {
-//    if (strlen(s) == 1) {
-//        return 1;
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct lettle {
+    char c;
+    int index;
+} lettle;
+int compare(const void* a, const void* b) {
+    return ((lettle*)a)->c - ((lettle*)b)->c;
+}
+int lengthOfLongestSubstring(char* s) {
+    if (strlen(s) == 1) {
+        return 1;
+    }
+    lettle* let = (lettle*)malloc(strlen(s) * sizeof(lettle));
+    int i = 0;
+    for (i = 0; i < strlen(s); i++) {
+        let[i].index = i;
+        let[i].c = s[i];
+    }
+    int left = 0;
+    int right = 1;
+    int count = 1;
+    int temp = strlen(s);
+    int temp1 = 0;
+    while (count >= 1) {
+        lettle* tmp = (lettle*)malloc(temp * sizeof(lettle));
+        int temp2 = 0;
+        for (i = temp1; i < temp; i++) {
+            tmp[temp2++].c = s[i];
+        }
+        qsort(let, strlen(s), sizeof(lettle), compare);
+        while (right < temp)
+        {
+            char num1 = tmp[left].c;
+            char num2 = tmp[right].c;
+            if (num2 != num1) {
+                left++;
+                let[left].c = let[right].c;
+                count++;
+            }
+            else {
+                right++;
+            }
+        }
+        if (temp1 + temp < strlen(s))
+        {
+            temp1++;
+        }
+        else {
+            temp1 = 0;
+        }
+        if (left != count && temp1 + temp <= strlen(s))
+        {
+            temp--;
+        }
+        else {
+            return count;
+        }
+    }
+    return 1;
+}
+
+
+//#include <stdbool.h>
+//#include <stdio.h>
+//#include <stdlib.h>
+//bool isPalindrome(int x) 
+//{
+//    if (x < 0) return false;
+//    if (x < 10) return true;
+//    long long original = x;
+//    long long reversed = 0;
+//    while (x > 0) {
+//        reversed = reversed * 10 + x % 10;
+//        x /= 10;
 //    }
-//    lettle* let = (lettle*)malloc(strlen(s) * sizeof(lettle));
-//    int i = 0;
-//    for (i = 0; i < strlen(s); i++) {
-//        let[i].index = i;
-//        let[i].c = s[i];
-//    }
-//    int left = 0;
-//    int right = 1;
-//    qsort(let, strlen(s), sizeof(lettle), compare);
-//    int count = 1;
-//    while (right < strlen(s)) {
-//        char num1 = let[left].c;
-//        char num2 = let[right].c;
-//        if (num2 != num1) {
-//            left++;
-//            let[left].c = let[right].c;
-//            count++;
-//        }
-//        else {
-//            right++;
-//        }
-//    }
-//    return count;
+//    return original == reversed;
 //}
 
 
