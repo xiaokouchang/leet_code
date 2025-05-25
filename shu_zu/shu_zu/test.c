@@ -433,3 +433,44 @@ int lengthOfLongestSubstring(char* s) {
 //}
 
 
+struct ListNode {
+     int val;
+     struct ListNode *next;
+};
+struct ListNode* STLFind(struct ListNode* head, int x)
+{
+    struct ListNode* cur = head;
+    while (cur != NULL)
+    {
+        if (cur->val == x)
+        {
+            return cur;
+        }
+        cur = cur->next;
+    }
+    return NULL;
+}
+struct ListNode* removeElements(struct ListNode* head, int val) {
+    struct ListNode* cur = head;
+    while (cur != NULL)
+    {
+        struct ListNode* tmp = STLFind(cur, val);
+        if (head == tmp)
+        {
+            head = head->next;
+            free(head);
+        }
+        else
+        {
+            struct ListNode* temp = head;
+            while (temp->next != tmp)
+            {
+                temp = temp->next;
+            }
+            temp = tmp->next;
+            free(tmp);
+        }
+        cur = cur->next;
+    }
+    return head;
+}
