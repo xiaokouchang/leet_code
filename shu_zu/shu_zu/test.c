@@ -121,67 +121,67 @@
 //提示：
 //0 <= s.length <= 5 * 104
 //s由英文字母、数字、符号和空格组成
-#include<stdio.h>
-#include<stdlib.h>
-typedef struct lettle {
-    char c;
-    int index;
-} lettle;
-int compare(const void* a, const void* b) {
-    return ((lettle*)a)->c - ((lettle*)b)->c;
-}
-int lengthOfLongestSubstring(char* s) {
-    if (strlen(s) == 1) {
-        return 1;
-    }
-    lettle* let = (lettle*)malloc(strlen(s) * sizeof(lettle));
-    int i = 0;
-    for (i = 0; i < strlen(s); i++) {
-        let[i].index = i;
-        let[i].c = s[i];
-    }
-    int left = 0;
-    int right = 1;
-    int count = 1;
-    int temp = strlen(s);
-    int temp1 = 0;
-    while (count >= 1) {
-        lettle* tmp = (lettle*)malloc(temp * sizeof(lettle));
-        int temp2 = 0;
-        for (i = temp1; i < temp; i++) {
-            tmp[temp2++].c = s[i];
-        }
-        qsort(let, strlen(s), sizeof(lettle), compare);
-        while (right < temp)
-        {
-            char num1 = tmp[left].c;
-            char num2 = tmp[right].c;
-            if (num2 != num1) {
-                left++;
-                let[left].c = let[right].c;
-                count++;
-            }
-            else {
-                right++;
-            }
-        }
-        if (temp1 + temp < strlen(s))
-        {
-            temp1++;
-        }
-        else {
-            temp1 = 0;
-        }
-        if (left != count && temp1 + temp <= strlen(s))
-        {
-            temp--;
-        }
-        else {
-            return count;
-        }
-    }
-    return 1;
-}
+//#include<stdio.h>
+//#include<stdlib.h>
+//typedef struct lettle {
+//    char c;
+//    int index;
+//} lettle;
+//int compare(const void* a, const void* b) {
+//    return ((lettle*)a)->c - ((lettle*)b)->c;
+//}
+//int lengthOfLongestSubstring(char* s) {
+//    if (strlen(s) == 1) {
+//        return 1;
+//    }
+//    lettle* let = (lettle*)malloc(strlen(s) * sizeof(lettle));
+//    int i = 0;
+//    for (i = 0; i < strlen(s); i++) {
+//        let[i].index = i;
+//        let[i].c = s[i];
+//    }
+//    int left = 0;
+//    int right = 1;
+//    int count = 1;
+//    int temp = strlen(s);
+//    int temp1 = 0;
+//    while (count >= 1) {
+//        lettle* tmp = (lettle*)malloc(temp * sizeof(lettle));
+//        int temp2 = 0;
+//        for (i = temp1; i < temp; i++) {
+//            tmp[temp2++].c = s[i];
+//        }
+//        qsort(let, strlen(s), sizeof(lettle), compare);
+//        while (right < temp)
+//        {
+//            char num1 = tmp[left].c;
+//            char num2 = tmp[right].c;
+//            if (num2 != num1) {
+//                left++;
+//                let[left].c = let[right].c;
+//                count++;
+//            }
+//            else {
+//                right++;
+//            }
+//        }
+//        if (temp1 + temp < strlen(s))
+//        {
+//            temp1++;
+//        }
+//        else {
+//            temp1 = 0;
+//        }
+//        if (left != count && temp1 + temp <= strlen(s))
+//        {
+//            temp--;
+//        }
+//        else {
+//            return count;
+//        }
+//    }
+//    return 1;
+//}
 
 
 //#include <stdbool.h>
@@ -433,44 +433,221 @@ int lengthOfLongestSubstring(char* s) {
 //}
 
 
-struct ListNode {
-     int val;
-     struct ListNode *next;
-};
-struct ListNode* STLFind(struct ListNode* head, int x)
-{
-    struct ListNode* cur = head;
-    while (cur != NULL)
-    {
-        if (cur->val == x)
-        {
-            return cur;
-        }
-        cur = cur->next;
-    }
-    return NULL;
-}
-struct ListNode* removeElements(struct ListNode* head, int val) {
-    struct ListNode* cur = head;
-    while (cur != NULL)
-    {
-        struct ListNode* tmp = STLFind(cur, val);
-        if (head == tmp)
-        {
-            head = head->next;
-            free(head);
-        }
-        else
-        {
-            struct ListNode* temp = head;
-            while (temp->next != tmp)
-            {
-                temp = temp->next;
-            }
-            temp = tmp->next;
-            free(tmp);
-        }
-        cur = cur->next;
-    }
-    return head;
-}
+//第203题
+//给你一个链表的头节点head和一个整数val,请你删除链表中所有满足Node.val==val的节点,并返回新的头节点
+//示例1:
+//输入:head = [1, 2, 6, 3, 4, 5, 6], val = 6
+//输出:[1, 2, 3, 4, 5]
+//示例2:
+//输入:head = [], val = 1
+//输出:[]
+//示例3:
+//输入:head = [7, 7, 7, 7], val = 7
+//输出:[]
+//提示:
+//列表中的节点数目在范围[0, 104]内
+//1 <= Node.val <= 50
+//0 <= val <= 50
+//方法1
+//#include <stdio.h>
+//#include <assert.h>
+//#include <stdlib.h>
+//typedef struct ListNode 
+//{
+//    int val;
+//    struct ListNode *next;
+//}ListNode;
+//void STLPushBack(ListNode** phead, int val);
+//ListNode* STLGiveNode(ListNode** phead, int val);
+//
+//ListNode* STLGiveNode(ListNode** phead, int val)
+//{
+//    ListNode* newnode = (ListNode*)malloc(sizeof(ListNode));
+//    if (newnode == NULL)
+//    {
+//        perror("STLGiveNode");
+//        return;
+//    }
+//    newnode->val = val;
+//    newnode->next = NULL;
+//    return newnode;
+//}
+//
+//void STLPushBack(ListNode** phead, int val)
+//{
+//    ListNode* newnode = STLGiveNode(phead, val);
+//    if (*phead == NULL)
+//    {
+//        *phead = newnode;
+//    }
+//    else
+//    {
+//        ListNode* cur = *phead;
+//        while (cur->next != NULL)
+//        {
+//            cur = cur->next;
+//        }
+//        cur->next = newnode;
+//    }
+//}
+//ListNode* removeElements(struct ListNode** head, int val) 
+//{
+//    while (*head != NULL && (*head)->val == val)
+//    {
+//        ListNode* tmp = *head;
+//        *head = (*head)->next;
+//        free(tmp);
+//    }
+//    ListNode* temp = *head;
+//    while (temp != NULL && temp->next != NULL)
+//    {
+//        if (temp->next->val == val)
+//        {
+//            ListNode* cur = temp->next;
+//            temp->next = cur->next;
+//            free(cur);
+//        }
+//        else
+//        {
+//            temp = temp->next;
+//        }
+//    }
+//}
+//void STLPrint(struct ListNode* head)
+//{
+//    ListNode* cur = head;
+//    while (cur != NULL)
+//    {
+//        printf("%d->", cur->val);
+//        cur = cur->next;
+//    }
+//    printf("NULL\n");
+//}
+//int main()
+//{
+//    ListNode* plist = NULL;
+//    STLPushBack(&plist, 1);
+//    STLPushBack(&plist, 2);
+//    STLPushBack(&plist, 2);
+//    STLPushBack(&plist, 4);
+//    removeElements(&plist, 4);
+//    STLPrint(plist);
+//    return 0;
+//}
+
+
+//方法2
+//递归
+//链表的定义具有递归的性质,因此链表题目常可以用递归的方法求解
+//这道题要求删除链表中所有节点值等于特定值的节点,可以用递归实现
+//对于给定的链表,首先对除了头节点head以外的节点进行删除操作,然后判断head的节点值是否等于给定的val。
+//如果head的节点值等于val,则head需要被删除,因此删除操作后的头节点为head.next;
+//如果head的节点值不等于val,则head保留,因此删除操作后的头节点还是head。
+//上述过程是一个递归的过程
+//#include <stdio.h>
+//#include <assert.h>
+//#include <stdlib.h>
+//typedef struct ListNode 
+//{
+//    int val;
+//    struct ListNode *next;
+//}ListNode;
+//ListNode* removeElements(struct ListNode* head, int val);
+//ListNode* STLGiveNode(ListNode** phead, int val)
+//{
+//    ListNode* newnode = (ListNode*)malloc(sizeof(ListNode));
+//    if (newnode == NULL)
+//    {
+//        perror("STLGiveNode");
+//        return;
+//    }
+//    newnode->val = val;
+//    newnode->next = NULL;
+//    return newnode;
+//}
+//
+//void STLPushBack(ListNode** phead, int val)
+//{
+//    ListNode* newnode = STLGiveNode(phead, val);
+//    if (*phead == NULL)
+//    {
+//        *phead = newnode;
+//    }
+//    else
+//    {
+//        ListNode* cur = *phead;
+//        while (cur->next != NULL)
+//        {
+//            cur = cur->next;
+//        }
+//        cur->next = newnode;
+//    }
+//}
+//ListNode* removeElements(struct ListNode* head, int val) 
+//{
+//    if (head == NULL)
+//    {
+//        return head;
+//    }
+//    head->next = removeElements(head->next, val);
+//    return head->val == val ? head->next : head;
+//}
+//void STLPrint(struct ListNode* head)
+//{
+//    ListNode* cur = head;
+//    while (cur != NULL)
+//    {
+//        printf("%d->", cur->val);
+//        cur = cur->next;
+//    }
+//    printf("NULL\n");
+//}
+//int main()
+//{
+//    ListNode* plist = NULL;
+//    STLPushBack(&plist, 1);
+//    STLPushBack(&plist, 2);
+//    STLPushBack(&plist, 2);
+//    STLPushBack(&plist, 4);
+//    removeElements(plist, 4);
+//    STLPrint(plist);
+//    return 0;
+//}
+
+
+//方法3
+//迭代
+//也可以用迭代的方法删除链表中所有节点值等于特定值的节点。
+//用temp表示当前节点。如果temp的下一个节点不为空且下一个节点的节点值等于给定的val,则需要删除下一个节点。
+//删除下一个节点可以通过以下做法实现:
+//temp.next = temp.next.next
+//如果temp的下一个节点的节点值不等于给定的val,则保留下一个节点,将temp移动到下一个节点即可
+//当temp的下一个节点为空时,链表遍历结束,此时所有节点值等于val的节点都被删除
+//具体实现方面,由于链表的头节点head有可能需要被删除,因此创建哑节点dummyHead,
+//令dummyHead.next = head,初始化temp = dummyHead,然后遍历链表进行删除操作。
+//最终返回dummyHead.next即为删除操作后的头节点
+//#include <stdio.h>
+//#include <stdlib.h>
+//typedef struct ListNode 
+//{
+//    int val;
+//    struct ListNode *next;
+//}ListNode;
+//struct ListNode* removeElements(struct ListNode* head, int val) 
+//{
+//    struct ListNode* dummyHead = malloc(sizeof(struct ListNode));
+//    dummyHead->next = head;
+//    struct ListNode* temp = dummyHead;
+//    while (temp->next != NULL) 
+//    {
+//        if (temp->next->val == val) 
+//        {
+//            temp->next = temp->next->next;
+//        }
+//        else 
+//        {
+//            temp = temp->next;
+//        }
+//    }
+//    return dummyHead->next;
+//}
