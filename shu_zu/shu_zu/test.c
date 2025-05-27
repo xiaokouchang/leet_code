@@ -651,3 +651,168 @@
 //    }
 //    return dummyHead->next;
 //}
+
+
+//方法4---两个一前一后指针
+//#include <stdio.h>
+//#include <stdlib.h>
+//typedef struct ListNode 
+//{
+//    int val;
+//    struct ListNode *next;
+//};
+//struct ListNode* removeElements(struct ListNode* head, int val);
+//struct ListNode* removeElements(struct ListNode* head, int val) 
+//{
+//    struct ListNode* cur = head;
+//    struct ListNode* newhead = NULL;
+//    struct ListNode* tail = NULL;
+//    while (cur)
+//    {
+//        if (cur->val != val)
+//        {
+//            //尾插
+//            if (tail == NULL)
+//            {
+//                newhead = tail = cur;
+//            }
+//            else
+//            {
+//                tail->next = cur;
+//                tail = tail->next;
+//            }
+//            cur = cur->next;
+//        }
+//        else
+//        {
+//            struct ListNode* next = cur->next;
+//            free(cur);
+//            cur = next;
+//        }
+//    }
+//    return newhead;
+//}
+//int main()
+//{
+//    struct ListNode* n1 = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    struct ListNode* n2 = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    struct ListNode* n3 = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    struct ListNode* n4 = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    n1->val = 1;
+//    n2->val = 2;
+//    n3->val = 2;
+//    n4->val = 4;
+//    n1->next = n2;
+//    n2->next = n3;
+//    n3->next = n4;
+//    n4->next = NULL;
+//    struct ListNode* head = removeElements(n1, 2);
+//    while (head)
+//    {
+//        printf("%d->", head->val);
+//        head = head->next;
+//    }
+//    printf("NULL\n");
+//    return 0;
+//}
+
+
+//方法5
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+//struct ListNode* removeElements(struct ListNode* head, int val) {
+//    struct ListNode* cur = head;
+//    struct ListNode* newhead = NULL;
+//    struct ListNode* tail = NULL;
+//    while (cur) {
+//        if (cur->val != val) {
+//            // 尾插
+//            if (tail == NULL) {
+//                newhead = tail = cur;
+//            }
+//            else {
+//                tail->next = cur;
+//                tail = tail->next;
+//            }
+//            cur = cur->next;
+//        }
+//        else {
+//            struct ListNode* next = cur->next;
+//            free(cur);
+//            cur = next;
+//        }
+//    }
+//    if (tail)
+//    {
+//        tail->next = NULL;
+//    }
+//    return newhead;
+//}
+
+
+//第876题 --- 链表的中间结点
+//给你单链表的头结点head,请你找出并返回链表的中间结点
+//如果有两个中间结点,则返回第二个中间结点
+//示例1:
+//输入:head = [1, 2, 3, 4, 5]
+//输出:[3, 4, 5]
+//解释:链表只有一个中间结点,值为3
+//示例2:
+//输入:head = [1, 2, 3, 4, 5, 6]
+//输出:[4, 5, 6]
+//解释:该链表有两个中间结点,值分别为3和4,返回第二个结点
+//提示:
+//链表的结点数范围是[1, 100]
+//1 <= Node.val <= 100
+//方法1 --- 两次遍历
+//#include <stdio.h>
+//#include <stdlib.h>
+//struct ListNode {
+//    int val;
+//    struct ListNode* next;
+//};
+//struct ListNode* middleNode(struct ListNode* head) 
+//{
+//    struct ListNode* cur = head;
+//    struct ListNode* prev = head;
+//    int count = 0;
+//    while (cur)
+//    {
+//        count++;
+//        cur = cur->next;
+//    }
+//    count /= 2;
+//    count++;
+//    for (count;count > 1;count--)
+//    {
+//        prev = prev->next;
+//    }
+//    return prev;
+//}
+
+
+//方法2 --- 一次遍历(快慢指针)
+//#include <stdio.h>
+//#include <stdlib.h>
+//struct ListNode 
+//{
+//    int val;
+//    struct ListNode *next;
+//};
+//struct ListNode* middleNode(struct ListNode* head) 
+//{
+//    struct ListNode* fast = head;
+//    struct ListNode* slow = head;
+//    while (fast && fast->next)
+//    {
+//        fast = fast->next->next;
+//        slow = slow->next;
+//    }
+//    return slow;
+//}
+
