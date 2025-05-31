@@ -201,6 +201,133 @@
 //}
 
 
+//第21题 --- 合并两个有序链表
+//将两个升序链表合并为一个新的升序链表并返回。
+//新链表是通过拼接给定的两个链表的所有节点组成的。
+//示例1:
+//输入:l1 = [1, 2, 4], l2 = [1, 3, 4]
+//输出:[1, 1, 2, 3, 4, 4]
+//示例2:
+//输入:l1 = [],l2 = []
+//输出:[]
+//示例3:
+//输入:l1 = [],l2 = [0]
+//输出:[0]
+//提示:
+//两个链表的节点数目范围是[0, 50]
+//-100<=Node.val<=100
+//l1和l2均按非递减顺序排列
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2) {
+    struct ListNode dummy = { 0 };
+    struct ListNode* tail = &dummy;
+    while (list1 != NULL && list2 != NULL) {
+        if (list1->val <= list2->val) {
+            tail->next = list1;
+            list1 = list1->next;
+        }
+        else {
+            tail->next = list2;
+            list2 = list2->next;
+        }
+        tail = tail->next;
+    }
+    if (list1 != NULL) {
+        tail->next = list1;
+    }
+    else {
+        tail->next = list2;
+    }
+    return dummy.next;
+}
+
+
+#include <stdio.h>
+#include <stdlib.h>
+struct ListNode 
+{
+    int val;
+    struct ListNode *next;
+};
+struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2)
+{
+    struct ListNode* n1 = list1;
+    struct ListNode* n2 = list2;
+    struct ListNode* tmp = list2;
+    while (n1 != NULL && n2 != NULL)
+    {
+        if (n1->val <= n2->val)
+        {
+            struct ListNode* newnode = (struct ListNode*)malloc(sizeof(struct ListNode));
+            struct ListNode* temp = n2->next;
+            newnode->val = n1->val;
+            if (n2->next == NULL)
+            {
+                n1->next = n2;
+                tmp = list1;
+            }
+            else
+            {
+                n2->next = newnode;
+                newnode->next = temp;
+            }
+            n1 = n1->next;
+        }
+        else
+        {
+            n2 = n2->next;
+        }
+        n2 = n2->next;
+    }
+    return tmp;
+}
+struct ListNode* test1()
+{
+    struct ListNode* a1 = (struct ListNode*)malloc(sizeof(struct ListNode));
+    //struct ListNode* a2 = (struct ListNode*)malloc(sizeof(struct ListNode));
+    //struct ListNode* a3 = (struct ListNode*)malloc(sizeof(struct ListNode));
+    a1->val = 1;
+    //a2->val = 2;
+    //a3->val = 4;
+    //a1->next = a2;
+    //a2->next = a3;
+    a1->next = NULL;
+    return a1;
+}
+struct ListNode* test2()
+{
+    struct ListNode* b1 = (struct ListNode*)malloc(sizeof(struct ListNode));
+    //struct ListNode* b2 = (struct ListNode*)malloc(sizeof(struct ListNode));
+    //struct ListNode* b3 = (struct ListNode*)malloc(sizeof(struct ListNode));
+    b1->val = 2;
+    //b2->val = 3;
+    //b3->val = 4;
+    //b1->next = b2;
+    //b2->next = b3;
+    b1->next = NULL;
+    return b1;
+}
+int main()
+{
+    struct ListNode* n1 = test1();
+    struct ListNode* n2 = test2();
+    struct ListNode* cur = mergeTwoLists(n1, n2);
+    while (cur)
+    {
+        printf("%d->", cur->val);
+        cur = cur->next;
+    }
+    printf("NULL\n");
+    return 0;
+}
+
+
 //第26题
 //删除有序数组中的重复项
 //给你一个非严格递增排列的数组nums,请你原地删除重复出现的元素,使每个元素只出现一次
@@ -815,4 +942,205 @@
 //    }
 //    return slow;
 //}
+
+
+//https://leetcode.cn/problems/kth-node-from-end-of-list-lcci/description/
+//返回倒数第k个节点
+//实现一种算法,找出单向链表中倒数第k个节点。返回该节点的值
+//注意:本题相对原题稍作改动
+//示例:
+//输入:1->2->3->4->5 和 k = 2
+//输出:4
+//说明:
+//给定的k保证是有效的。
+//方法1
+//struct ListNode 
+//{
+//    int val;
+//    struct ListNode *next;
+//};
+//int kthToLast(struct ListNode* head, int k) 
+//{
+//    struct ListNode* cur = head;
+//    int count = 0;
+//    while (cur)
+//    {
+//        count++;
+//        cur = cur->next;
+//    }
+//    int i = 0;
+//    cur = head;
+//    while (i < count - k)
+//    {
+//        cur = cur->next;
+//        i++;
+//    }
+//    return cur->val;
+//}
+
+
+//方法2
+//fast先走k-1步然后fast和slow一起走,直到fast为空
+//#include <stdio.h>
+//struct ListNode 
+//{
+//    int val;
+//    struct ListNode *next;
+//};
+//int kthToLast(struct ListNode* head, int k)
+//{
+//    struct ListNode* fast = head;
+//    struct ListNode* slow = head;
+//    int x = k - 1;
+//    while (x > 0)
+//    {
+//        fast = fast->next;
+//        x--;
+//    }
+//    while (fast->next != NULL)
+//    {
+//        fast = fast->next;
+//        slow = slow->next;
+//    }
+//    return slow->val;
+//}
+
+
+//方法3
+//fast先走k步然后fast和slow一起走,直到fast->next为空
+//#include <stdio.h>
+//struct ListNode 
+//{
+//    int val;
+//    struct ListNode *next;
+//};
+//int kthToLast(struct ListNode* head, int k) 
+//{
+//    if (head == NULL)
+//    {
+//        return 0;
+//    }
+//    struct ListNode* fast = head;
+//    struct ListNode* slow = head;
+//    while (k--)
+//    {
+//        if (fast == NULL)
+//        {
+//            return 0;
+//        }
+//        fast = fast->next;
+//    }
+//    while (fast != NULL)
+//    {
+//        fast = fast->next;
+//        slow = slow->next;
+//    }
+//    return slow->val;
+//}
+
+
+//1->2->3->4->5
+//#include <stdio.h>
+//#include <stdlib.h>
+//struct ListNode 
+//{
+//    int val;
+//    struct ListNode *next;
+//};
+//struct ListNode* reverseList(struct ListNode* head)
+//{
+//    struct ListNode* cur = head;
+//    struct ListNode* temp = NULL;
+//    struct ListNode* newnode = NULL;
+//    while (cur)
+//    {
+//        newnode = (struct ListNode*)malloc(sizeof(struct ListNode));
+//        if (newnode == NULL)
+//        {
+//            perror("newnode");
+//            return 0;
+//        }
+//        newnode->val = cur->val;
+//        newnode->next = temp;
+//        temp = newnode;
+//        cur = cur->next;
+//    }
+//    return newnode;
+//}
+//int main()
+//{
+//    struct ListNode* n1 = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    struct ListNode* n2 = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    struct ListNode* n3 = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    struct ListNode* n4 = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    n1->val = 1;
+//    n2->val = 2;
+//    n3->val = 3;
+//    n4->val = 4;
+//    n1->next = n2;
+//    n2->next = n3;
+//    n3->next = n4;
+//    n4->next = NULL;
+//    struct ListNode* cur = reverseList(n1);
+//    while (cur)
+//    {
+//        printf("%d->", cur->val);
+//        cur = cur->next;
+//    }
+//    return 0;
+//}
+
+
+//方法2
+//改变链表方向
+//交换位置
+//#include <stdio.h>
+//#include <stdlib.h>
+//struct ListNode
+//{
+//    int val;
+//    struct ListNode* next;
+//};
+//struct ListNode* reverseList(struct ListNode* head)
+//{
+//    struct ListNode* n1 = NULL;
+//    struct ListNode* n2 = head;
+//    struct ListNode* tmp = head;
+//    while (tmp != NULL)
+//    {
+//        tmp = n2->next;
+//        n2->next = n1;
+//        n1 = n2;
+//        n2 = tmp;
+//    }
+//    return n1;
+//}
+//struct ListNode* test()
+//{
+//    struct ListNode* n1 = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    struct ListNode* n2 = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    struct ListNode* n3 = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    struct ListNode* n4 = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    n1->val = 1;
+//    n2->val = 2;
+//    n3->val = 3;
+//    n4->val = 4;
+//    n1->next = n2;
+//    n2->next = n3;
+//    n3->next = n4;
+//    n4->next = NULL;
+//    return n1;
+//}
+//int main()
+//{
+//    struct ListNode* n1 = test();
+//    struct ListNode* cur = reverseList(n1);
+//    while (cur)
+//    {
+//        printf("%d->", cur->val);
+//        cur = cur->next;
+//    }
+//    return 0;
+//}
+
 
