@@ -224,108 +224,163 @@
  *     struct ListNode *next;
  * };
  */
-struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2) {
-    struct ListNode dummy = { 0 };
-    struct ListNode* tail = &dummy;
-    while (list1 != NULL && list2 != NULL) {
-        if (list1->val <= list2->val) {
-            tail->next = list1;
-            list1 = list1->next;
-        }
-        else {
-            tail->next = list2;
-            list2 = list2->next;
-        }
-        tail = tail->next;
-    }
-    if (list1 != NULL) {
-        tail->next = list1;
-    }
-    else {
-        tail->next = list2;
-    }
-    return dummy.next;
-}
+//struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2) {
+//    struct ListNode dummy = { 0 };
+//    struct ListNode* tail = &dummy;
+//    while (list1 != NULL && list2 != NULL) {
+//        if (list1->val <= list2->val) {
+//            tail->next = list1;
+//            list1 = list1->next;
+//        }
+//        else {
+//            tail->next = list2;
+//            list2 = list2->next;
+//        }
+//        tail = tail->next;
+//    }
+//    if (list1 != NULL) {
+//        tail->next = list1;
+//    }
+//    else {
+//        tail->next = list2;
+//    }
+//    return dummy.next;
+//}
 
 
-#include <stdio.h>
-#include <stdlib.h>
-struct ListNode 
-{
-    int val;
-    struct ListNode *next;
-};
-struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2)
-{
-    struct ListNode* n1 = list1;
-    struct ListNode* n2 = list2;
-    struct ListNode* tmp = list2;
-    while (n1 != NULL && n2 != NULL)
-    {
-        if (n1->val <= n2->val)
-        {
-            struct ListNode* newnode = (struct ListNode*)malloc(sizeof(struct ListNode));
-            struct ListNode* temp = n2->next;
-            newnode->val = n1->val;
-            if (n2->next == NULL)
-            {
-                n1->next = n2;
-                tmp = list1;
-            }
-            else
-            {
-                n2->next = newnode;
-                newnode->next = temp;
-            }
-            n1 = n1->next;
-        }
-        else
-        {
-            n2 = n2->next;
-        }
-        n2 = n2->next;
-    }
-    return tmp;
-}
-struct ListNode* test1()
-{
-    struct ListNode* a1 = (struct ListNode*)malloc(sizeof(struct ListNode));
-    //struct ListNode* a2 = (struct ListNode*)malloc(sizeof(struct ListNode));
-    //struct ListNode* a3 = (struct ListNode*)malloc(sizeof(struct ListNode));
-    a1->val = 1;
-    //a2->val = 2;
-    //a3->val = 4;
-    //a1->next = a2;
-    //a2->next = a3;
-    a1->next = NULL;
-    return a1;
-}
-struct ListNode* test2()
-{
-    struct ListNode* b1 = (struct ListNode*)malloc(sizeof(struct ListNode));
-    //struct ListNode* b2 = (struct ListNode*)malloc(sizeof(struct ListNode));
-    //struct ListNode* b3 = (struct ListNode*)malloc(sizeof(struct ListNode));
-    b1->val = 2;
-    //b2->val = 3;
-    //b3->val = 4;
-    //b1->next = b2;
-    //b2->next = b3;
-    b1->next = NULL;
-    return b1;
-}
-int main()
-{
-    struct ListNode* n1 = test1();
-    struct ListNode* n2 = test2();
-    struct ListNode* cur = mergeTwoLists(n1, n2);
-    while (cur)
-    {
-        printf("%d->", cur->val);
-        cur = cur->next;
-    }
-    printf("NULL\n");
-    return 0;
-}
+//方法2
+//#include <stdio.h>
+//#include <stdlib.h>
+//struct ListNode 
+//{
+//    int val;
+//    struct ListNode *next;
+//};
+//struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2)
+//{
+//    struct ListNode* cur1 = list1;
+//    struct ListNode* cur2 = list2;
+//    struct ListNode* head = NULL;
+//    struct ListNode* tail = NULL;
+//    if (list1 == NULL)
+//        return list2;
+//    if (list2 == NULL)
+//        return list1;
+//    while (cur1 && cur2) {
+//        if (cur1->val < cur2->val) {
+//            if (head == NULL) {
+//                head = tail = cur1;
+//            }
+//            else {
+//                tail->next = cur1;
+//                tail = tail->next;
+//            }
+//            cur1 = cur1->next;
+//        }
+//        else {
+//            if (head == NULL) {
+//                head = tail = cur2;
+//            }
+//            else {
+//                tail->next = cur2;
+//                tail = tail->next;
+//            }
+//            cur2 = cur2->next;
+//        }
+//    }
+//    if (cur1) {
+//        tail->next = cur1;
+//    }
+//    else {
+//        tail->next = cur2;
+//    }
+//    return head;
+//}
+//struct ListNode* test1()
+//{
+//    struct ListNode* a1 = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    struct ListNode* a2 = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    struct ListNode* a3 = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    a1->val = 1;
+//    a2->val = 2;
+//    a3->val = 4;
+//    a1->next = a2;
+//    a2->next = a3;
+//    a3->next = NULL;
+//    return a1;
+//}
+//struct ListNode* test2()
+//{
+//    struct ListNode* b1 = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    struct ListNode* b2 = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    struct ListNode* b3 = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    b1->val = 2;
+//    b2->val = 3;
+//    b3->val = 4;
+//    b1->next = b2;
+//    b2->next = b3;
+//    b3->next = NULL;
+//    return b1;
+//}
+//int main()
+//{
+//    struct ListNode* n1 = test1();
+//    struct ListNode* n2 = test2();
+//    struct ListNode* cur = mergeTwoLists(n1, n2);
+//    while (cur)
+//    {
+//        printf("%d->", cur->val);
+//        cur = cur->next;
+//    }
+//    printf("NULL\n");
+//    return 0;
+//}
+
+
+//方法3
+//#include<stdio.h>
+//#include<stdlib.h>
+//struct ListNode 
+//{
+//    int val;
+//    struct ListNode *next;
+//};
+//struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2) 
+//{
+//    struct ListNode* cur1 = list1;
+//    struct ListNode* cur2 = list2;
+//    struct ListNode* guard = NULL;
+//    struct ListNode* tail = NULL;
+//    //带哨兵位的头结点
+//    guard = tail = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    tail->next = NULL;
+//    while (cur1 && cur2) 
+//    {
+//        if (cur1->val < cur2->val) 
+//        {
+//            tail->next = cur1;
+//            tail = tail->next;
+//            cur1 = cur1->next;
+//        }
+//        else 
+//        {
+//            tail->next = cur2;
+//            tail = tail->next;
+//            cur2 = cur2->next;
+//        }
+//    }
+//    if (cur1) 
+//    {
+//        tail->next = cur1;
+//    }
+//    else 
+//    {
+//        tail->next = cur2;
+//    }
+//    struct ListNode* head = guard->next;
+//    free(guard);
+//    return head;
+//}
 
 
 //第26题
