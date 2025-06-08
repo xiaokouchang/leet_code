@@ -201,6 +201,146 @@
 //}
 
 
+//第20题 --- 有效的括号
+//给定一个只包括'(',')','{','}','[',']'的字符串s,判断字符串是否有效。
+//有效字符串需满足:
+//左括号必须用相同类型的右括号闭合。
+//左括号必须以正确的顺序闭合。
+//每个右括号都有一个对应的相同类型的左括号
+//示例1:
+//输入:s = "()"
+//输出:true
+//示例2:
+//输入:s = "()[]{}"
+//输出:true
+//示例3:
+//输入:s = "(]"
+//输出:false
+//示例4:
+//输入:s = "([])"
+//输出:true
+//提示:
+//1 <= s.length <= 104
+//s仅由括号'()[]{}'组成
+//#include<stdio.h>
+//#include<assert.h>
+//#include<stdbool.h>
+//typedef char STDataType;
+//typedef struct Stack {
+//    STDataType* a;
+//    int top;
+//    int capacity; // 容量
+//} ST;
+//
+//// 初始化
+//void STInit(ST* ps);
+//
+//void STDestroy(ST* ps);
+//
+//// 只能在一端插入,即栈顶
+//void STPush(ST* ps, STDataType x);
+//
+//void STPop(ST* ps);
+//
+//int STSize(ST* ps);
+//
+//bool STEmpty(ST* ps);
+//
+//// 访问栈顶元素
+//STDataType STTop(ST* ps);
+//void STInit(ST* ps) {
+//    assert(ps);
+//    ps->a = (STDataType*)malloc(sizeof(STDataType) * 4);
+//    if (ps->a == NULL) {
+//        perror("ps->a");
+//        return;
+//    }
+//    ps->capacity = 4;
+//    ps->top = 0; // top是栈顶元素的下一个位置
+//    // ps->top = -1;         //top是栈顶元素
+//}
+//
+//void STDestroy(ST* ps) {
+//    assert(ps);
+//    free(ps->a);
+//    ps->a = NULL;
+//    ps->top = 0;
+//    ps->capacity = 0;
+//}
+//
+//void STPush(ST* ps, STDataType x) {
+//    assert(ps);
+//    if (ps->top == ps->capacity) {
+//        STDataType* tmp =
+//            (STDataType*)realloc(ps->a, sizeof(STDataType) * ps->capacity * 2);
+//        if (tmp == NULL) {
+//            perror("realloc fail");
+//            return;
+//        }
+//        ps->a = tmp;
+//        ps->capacity *= 2;
+//    }
+//    ps->a[ps->top] = x;
+//    ps->top++;
+//}
+//
+//void STPop(ST* ps) {
+//    assert(ps);
+//    assert(!STEmpty(ps));
+//    ps->top--;
+//}
+//
+//int STSize(ST* ps) {
+//    assert(ps);
+//    return ps->top;
+//}
+//
+//bool STEmpty(ST* ps) {
+//    assert(ps);
+//    return ps->top == 0;
+//}
+//
+//STDataType STTop(ST* ps) {
+//    assert(ps);
+//    assert(!STEmpty(ps));
+//    return ps->a[ps->top - 1];
+//}
+//bool isValid(char* s) {
+//    ST st;
+//    STInit(&st);
+//    while (*s)
+//    {
+//        if (*s == '(' || *s == '[' || *s == '{')
+//        {
+//            //入栈
+//            STPush(&st, *s);
+//        }
+//        else
+//        {
+//            //出栈
+//            if (STEmpty(&st))
+//            {
+//                STDestroy(&st);
+//                return false;
+//            }
+//            char top = STTop(&st);
+//            STPop(&st);
+//            if ((*s == ')' && top != '(')
+//                || (*s == ']' && top != '[')
+//                || (*s == '}' && top != '{'))
+//            {
+//                STDestroy(&st);
+//                return false;
+//            }
+//        }
+//        s++;
+//    }
+//    bool ret = STEmpty(&st);
+//    STDestroy(&st);
+//    return ret;
+//}
+
+
 //第21题 --- 合并两个有序链表
 //将两个升序链表合并为一个新的升序链表并返回。
 //新链表是通过拼接给定的两个链表的所有节点组成的。
@@ -1027,6 +1167,507 @@
 //    }
 //    return newhead;
 //}
+
+
+//第225题
+//请你仅使用两个队列实现一个后入先出的栈,并支持普通栈的全部四种操作(push、top、pop和empty)
+//实现MyStack类:
+//void push(int x) 将元素x压入栈顶
+//int pop() 移除并返回栈顶元素
+//int top() 返回栈顶元素
+//boolean empty() 如果栈是空的, 返回true;否则,返回false
+//注意:
+//你只能使用队列的标准操作——也就是push to back、peek/pop from front、size和is empty这些操作。
+//你所使用的语言也许不支持队列。 
+//你可以使用list(列表)或者deque(双端队列)来模拟一个队列,只要是标准的队列操作即可。
+//示例:
+//输入:
+//["MyStack", "push", "push", "top", "pop", "empty"]
+//[[], [1], [2], [], [], []]
+//输出:
+//[null, null, null, 2, 2, false]
+//解释:
+//MyStack myStack = new MyStack();
+//myStack.push(1);
+//myStack.push(2);
+//myStack.top(); // 返回 2
+//myStack.pop(); // 返回 2
+//myStack.empty(); // 返回 False
+//提示:
+//1 <= x <= 9
+//最多调用100 次 push、pop、top 和 empty
+//每次调用 pop 和 top 都保证栈不为空
+//进阶:你能否仅用一个队列来实现栈
+//typedef int QDataType;
+//typedef struct QueueNode {
+//    struct QueueNode* next;
+//    QDataType data;
+//} QNode;
+//
+//typedef struct Queue {
+//    QNode* head;
+//    QNode* tail;
+//    int size;
+//} Queue;
+//
+//// 初始化队列
+//void QueueInit(Queue* pq);
+//
+//// 销毁队列
+//void QueueDestory(Queue* pq);
+//
+//// 队尾入队列
+//void QueuePush(Queue* pq, QDataType x);
+//
+//// 队头出队列
+//void QueuePop(Queue* pq);
+//
+//// 获取队列中有效元素个数
+//int QueueSize(Queue* pq);
+//
+//// 检查队列是否为空
+//bool QueueEmpty(Queue* pq);
+//
+//// 取出队头的数据
+//QDataType QueueFront(Queue* pq);
+//
+//// 取出队尾的数据
+//QDataType QueueBack(Queue* pq);
+//void QueueInit(Queue* pq) {
+//    assert(pq);
+//    pq->head = pq->tail = NULL;
+//    pq->size = 0;
+//}
+//
+//void QueueDestory(Queue* pq) {
+//    assert(pq);
+//    QNode* cur = pq->head;
+//    while (cur) {
+//        QNode* next = cur->next;
+//        free(cur);
+//        cur = next;
+//    }
+//    pq->head = pq->tail = NULL;
+//    pq->size = 0;
+//}
+//void QueuePush(Queue* pq, QDataType x) {
+//    assert(pq);
+//    QNode* newnode = (QNode*)malloc(sizeof(QNode));
+//    if (newnode == NULL) {
+//        perror("newnode");
+//        return;
+//    }
+//    newnode->data = x;
+//    newnode->next = NULL;
+//    if (pq->head == NULL) {
+//        assert(pq->tail == NULL);
+//        pq->head = pq->tail = newnode;
+//    }
+//    else {
+//        pq->tail->next = newnode;
+//        pq->tail = newnode;
+//    }
+//    pq->size++;
+//}
+//
+//void QueuePop(Queue* pq) {
+//    assert(pq);
+//    assert(pq->head != NULL);
+//    // 方法1
+//    // QNode* next = pq->head->next;
+//    // free(pq->head);
+//    // pq->head = next;
+//    // if (pq->head == NULL)
+//    //{
+//    //	pq->tail = NULL;
+//    // }
+//    // 方法2
+//    if (pq->head->next == NULL) {
+//        free(pq->head);
+//        pq->tail = pq->head = NULL;
+//    }
+//    else {
+//        QNode* next = pq->head->next;
+//        free(pq->head);
+//        pq->head = next;
+//    }
+//    pq->size--;
+//}
+//int QueueSize(Queue* pq) {
+//    assert(pq);
+//    return pq->size;
+//}
+//bool QueueEmpty(Queue* pq) {
+//    assert(pq);
+//    // return pq->size == 0;
+//    return pq->head == NULL && pq->tail == NULL;
+//}
+//
+//QDataType QueueFront(Queue* pq) {
+//    assert(pq);
+//    assert(!QueueEmpty(pq));
+//    return pq->head->data;
+//}
+//
+//QDataType QueueBack(Queue* pq) {
+//    assert(pq);
+//    assert(!QueueEmpty(pq));
+//    return pq->tail->data;
+//}
+//typedef struct {
+//    Queue q1;
+//    Queue q2;
+//} MyStack;
+//
+//MyStack* myStackCreate() {
+//    MyStack* tmp = (MyStack*)malloc(sizeof(MyStack));
+//    if (tmp == NULL) {
+//        perror("malloc fail");
+//        return NULL;
+//    }
+//    QueueInit(&tmp->q1);
+//    QueueInit(&tmp->q2);
+//    return tmp;
+//}
+//
+//void myStackPush(MyStack* obj, int x) {
+//    if (!QueueEmpty(&obj->q1)) {
+//        QueuePush(&obj->q1, x);
+//    }
+//    else {
+//        QueuePush(&obj->q2, x);
+//    }
+//}
+//
+//int myStackPop(MyStack* obj) {
+//    Queue* emptyQ = &obj->q1; // 假定q1为空,q2不为空
+//    Queue* nonemptyQ = &obj->q2;
+//    if (!QueueEmpty(&obj->q1)) {
+//        emptyQ = &obj->q2;
+//        nonemptyQ = &obj->q1;
+//    }
+//    while (QueueSize(nonemptyQ) > 1) {
+//        QueuePush(emptyQ, QueueFront(nonemptyQ));
+//        QueuePop(nonemptyQ);
+//    }
+//    int top = QueueFront(nonemptyQ);
+//    QueuePop(nonemptyQ);
+//    return top;
+//}
+//
+//int myStackTop(MyStack* obj) {
+//    if (!QueueEmpty(&obj->q1)) {
+//        return QueueBack(&obj->q1);
+//    }
+//    else {
+//        return QueueBack(&obj->q2);
+//    }
+//}
+//
+//bool myStackEmpty(MyStack* obj) {
+//    return QueueEmpty(&obj->q1) && QueueEmpty(&obj->q2);
+//}
+//
+//void myStackFree(MyStack* obj) {
+//    QueueDestory(&obj->q1);
+//    QueueDestory(&obj->q2);
+//    free(obj);
+//}
+//
+///**
+// * Your MyStack struct will be instantiated and called as such:
+// * MyStack* obj = myStackCreate();
+// * myStackPush(obj, x);
+//
+// * int param_2 = myStackPop(obj);
+//
+// * int param_3 = myStackTop(obj);
+//
+// * bool param_4 = myStackEmpty(obj);
+//
+// * myStackFree(obj);
+//*/
+
+
+//第232题 --- 用栈实现队列
+//请你仅使用两个栈实现先入先出队列
+//队列应当支持一般队列支持的所有操作(push、pop、peek、empty):
+//实现MyQueue类:
+//void push(int x) 将元素x推到队列的末尾
+//int pop() 从队列的开头移除并返回元素
+//int peek() 返回队列开头的元素
+//boolean empty() 如果队列为空, 返回true; 否则,返回false
+//说明:
+//你只能使用标准的栈操作——也就是只有push to top, peek / pop from top, size,和is empty操作是合法的。
+//你所使用的语言也许不支持栈。
+//你可以使用list或者deque(双端队列)来模拟一个栈,只要是标准的栈操作即可。
+//示例1:
+//输入:
+//["MyQueue", "push", "push", "peek", "pop", "empty"]
+//[[], [1], [2], [], [], []]
+//输出:
+//[null, null, null, 1, 1, false]
+//解释:
+//MyQueue myQueue = new MyQueue();
+//myQueue.push(1); // queue is: [1]
+//myQueue.push(2); // queue is: [1, 2] (leftmost is front of the queue)
+//myQueue.peek(); // return 1
+//myQueue.pop(); // return 1, queue is [2]
+//myQueue.empty(); // return false
+//提示:
+//1 <= x <= 9
+//最多调用100次push、pop、peek 和 empty
+//假设所有操作都是有效的(例如,一个空的队列不会调用pop或者peek操作)
+//进阶:
+//你能否实现每个操作均摊时间复杂度为O(1)的队列？
+//换句话说,执行n个操作的总时间复杂度为O(n),即使其中一个操作可能花费较长时间
+//typedef int STDataType;
+//typedef struct Stack {
+//    STDataType* a;
+//    int top;
+//    int capacity; // 容量
+//} ST;
+//
+//// 初始化
+//void STInit(ST* ps);
+//
+//void STDestroy(ST* ps);
+//
+//// 只能在一端插入,即栈顶
+//void STPush(ST* ps, STDataType x);
+//
+//void STPop(ST* ps);
+//
+//int STSize(ST* ps);
+//
+//bool STEmpty(ST* ps);
+//
+//// 访问栈顶元素
+//STDataType STTop(ST* ps);
+//
+//void STInit(ST* ps) {
+//    assert(ps);
+//    ps->a = (STDataType*)malloc(sizeof(STDataType) * 4);
+//    if (ps->a == NULL) {
+//        perror("ps->a");
+//        return;
+//    }
+//    ps->capacity = 4;
+//    ps->top = 0; // top是栈顶元素的下一个位置
+//    // ps->top = -1;         //top是栈顶元素
+//}
+//
+//void STDestroy(ST* ps) {
+//    assert(ps);
+//    free(ps->a);
+//    ps->a = NULL;
+//    ps->top = 0;
+//    ps->capacity = 0;
+//}
+//
+//void STPush(ST* ps, STDataType x) {
+//    assert(ps);
+//    if (ps->top == ps->capacity) {
+//        STDataType* tmp =
+//            (STDataType*)realloc(ps->a, sizeof(STDataType) * ps->capacity * 2);
+//        if (tmp == NULL) {
+//            perror("realloc fail");
+//            return;
+//        }
+//        ps->a = tmp;
+//        ps->capacity *= 2;
+//    }
+//    ps->a[ps->top] = x;
+//    ps->top++;
+//}
+//
+//void STPop(ST* ps) {
+//    assert(ps);
+//    assert(!STEmpty(ps));
+//    ps->top--;
+//}
+//
+//int STSize(ST* ps) {
+//    assert(ps);
+//    return ps->top;
+//}
+//
+//bool STEmpty(ST* ps) {
+//    assert(ps);
+//    return ps->top == 0;
+//}
+//
+//STDataType STTop(ST* ps) {
+//    assert(ps);
+//    assert(!STEmpty(ps));
+//    return ps->a[ps->top - 1];
+//}
+//typedef struct {
+//    ST pushst;
+//    ST popst;
+//} MyQueue;
+//MyQueue* myQueueCreate() {
+//    MyQueue* obj = (MyQueue*)malloc(sizeof(MyQueue));
+//    if (obj == NULL) {
+//        perror("malloc fail");
+//        return NULL;
+//    }
+//    STInit(&obj->pushst);
+//    STInit(&obj->popst);
+//    return obj;
+//}
+//void myQueuePush(MyQueue* obj, int x) { STPush(&obj->pushst, x); }
+//int myQueuePeek(MyQueue* obj) {
+//    if (STEmpty(&obj->popst)) {
+//        // 倒数据
+//        while (!STEmpty(&obj->pushst)) {
+//            STPush(&obj->popst, STTop(&obj->pushst));
+//            STPop(&obj->pushst);
+//        }
+//    }
+//    return STTop(&obj->popst);
+//}
+//int myQueuePop(MyQueue* obj) {
+//    int front = myQueuePeek(obj);
+//    STPop(&obj->popst);
+//    return front;
+//}
+//
+//bool myQueueEmpty(MyQueue* obj) {
+//    return STEmpty(&obj->popst) && STEmpty(&obj->pushst);
+//}
+//
+//void myQueueFree(MyQueue* obj) {
+//    STDestroy(&obj->pushst);
+//    STDestroy(&obj->popst);
+//    free(obj);
+//}
+//
+///**
+// * Your MyQueue struct will be instantiated and called as such:
+// * MyQueue* obj = myQueueCreate();
+// * myQueuePush(obj, x);
+//
+// * int param_2 = myQueuePop(obj);
+//
+// * int param_3 = myQueuePeek(obj);
+//
+// * bool param_4 = myQueueEmpty(obj);
+//
+// * myQueueFree(obj);
+//*/
+
+
+//第622题 --- 设计循环队列
+//设计你的循环队列实现
+//循环队列是一种线性数据结构,其操作表现基于先进先出原则并且队尾被连接在队首之后以形成一个循环。
+//它也被称为"环形缓冲器"。
+//循环队列的一个好处是我们可以利用这个队列之前用过的空间。
+//在一个普通队列里,一旦一个队列满了,我们就不能插入下一个元素,即使在队列前面仍有空间。
+//但是使用循环队列,我们能使用这些空间去存储新的值。
+//你的实现应该支持如下操作:
+//MyCircularQueue(k):构造器,设置队列长度为k。
+//Front:从队首获取元素。如果队列为空,返回-1。
+//Rear:获取队尾元素。如果队列为空,返回-1。
+//enQueue(value):向循环队列插入一个元素。如果成功插入则返回真。
+//deQueue():从循环队列中删除一个元素。如果成功删除则返回真。
+//isEmpty():检查循环队列是否为空。
+//isFull():检查循环队列是否已满
+//示例:
+//MyCircularQueue circularQueue = new MyCircularQueue(3); // 设置长度为 3
+//circularQueue.enQueue(1);  //返回true
+//circularQueue.enQueue(2);  //返回true
+//circularQueue.enQueue(3);  //返回true
+//circularQueue.enQueue(4);  //返回false,队列已满
+//circularQueue.Rear();  //返回3
+//circularQueue.isFull();  //返回true
+//circularQueue.deQueue();  //返回true
+//circularQueue.enQueue(4);  //返回true
+//circularQueue.Rear();  //返回4
+//提示:
+//所有的值都在0至1000的范围内;
+//操作数将在1至1000的范围内;
+//请不要使用内置的队列库
+//typedef struct {
+//    int* a;
+//    int front;
+//    int rear;
+//    int k;
+//} MyCircularQueue;
+//MyCircularQueue* myCircularQueueCreate(int k) {
+//    MyCircularQueue* obj = (MyCircularQueue*)malloc(sizeof(MyCircularQueue));
+//    obj->front = obj->rear = 0;
+//    obj->a = (int*)malloc(sizeof(int) * (k + 1));
+//    obj->k = k;
+//    return obj;
+//}
+//bool myCircularQueueIsEmpty(MyCircularQueue* obj) {
+//    return obj->front == obj->rear;
+//}
+//bool myCircularQueueIsFull(MyCircularQueue* obj) {
+//    return (obj->rear + 1) % (obj->k + 1) == obj->front;
+//}
+//bool myCircularQueueEnQueue(MyCircularQueue* obj, int value) {
+//    if (myCircularQueueIsFull(obj))
+//    {
+//        return false;
+//    }
+//    obj->a[obj->rear++] = value;
+//    obj->rear %= (obj->k + 1);
+//    return true;
+//}
+//bool myCircularQueueDeQueue(MyCircularQueue* obj) {
+//    if (myCircularQueueIsEmpty(obj))
+//    {
+//        return false;
+//    }
+//    obj->front++;
+//    obj->front %= (obj->k + 1);
+//    return true;
+//}
+//int myCircularQueueFront(MyCircularQueue* obj) {
+//    if (myCircularQueueIsEmpty(obj))
+//    {
+//        return -1;
+//    }
+//    else
+//    {
+//        return obj->a[obj->front];
+//    }
+//}
+//int myCircularQueueRear(MyCircularQueue* obj) {
+//    if (myCircularQueueIsEmpty(obj))
+//    {
+//        return -1;
+//    }
+//    else
+//    {
+//        int x = obj->rear == 0 ? obj->k : obj->rear - 1;
+//        return obj->a[x];
+//    }
+//    // return obj->a[(obj->rear-1+obj->k+1) % (obj->k+1)];
+//}
+//void myCircularQueueFree(MyCircularQueue* obj) {
+//    free(obj->a);
+//    free(obj);
+//}
+///**
+// * Your MyCircularQueue struct will be instantiated and called as such:
+// * MyCircularQueue* obj = myCircularQueueCreate(k);
+// * bool param_1 = myCircularQueueEnQueue(obj, value);
+//
+// * bool param_2 = myCircularQueueDeQueue(obj);
+//
+// * int param_3 = myCircularQueueFront(obj);
+//
+// * int param_4 = myCircularQueueRear(obj);
+//
+// * bool param_5 = myCircularQueueIsEmpty(obj);
+//
+// * bool param_6 = myCircularQueueIsFull(obj);
+//
+// * myCircularQueueFree(obj);
+//*/
 
 
 //第876题 --- 链表的中间结点
