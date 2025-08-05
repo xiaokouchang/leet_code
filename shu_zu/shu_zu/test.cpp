@@ -299,6 +299,40 @@
 //}
 
 
+//第13题
+//https://leetcode.cn/problems/roman-to-integer/
+//class Solution 
+//{
+//public:
+//    int romanToInt(string s) 
+//    {
+//        string v1{ 'I', 'V', 'X', 'L', 'C', 'D', 'M' };
+//        vector<int> v2{ 1, 5, 10, 50, 100, 500, 1000 };
+//        size_t index1 = 0;
+//        int count = 0;
+//        size_t i = 0;
+//        for (i = 0; i < s.size() - 1; i++) 
+//        {
+//            int tmp1 = i;
+//            int tmp2 = i + 1;
+//            index1 = v1.find(s[tmp1]);
+//            size_t index2 = v1.find(s[tmp2]);
+//            if (index1 < index2) 
+//            {
+//                count -= v2[index1];
+//            }
+//            else 
+//            {
+//                count += v2[index1];
+//            }
+//        }
+//        index1 = v1.find(s[i]);
+//        count += v2[index1];
+//        return count;
+//    }
+//};
+
+
 //第17题
 //电话号码的字母组合
 //给定一个仅包含数字2-9的字符串,返回所有它能表示的字母组合。
