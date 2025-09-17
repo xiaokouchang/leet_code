@@ -158,10 +158,7 @@
 //    }
 //};
 
-//0 1 2 3 4 5
-//6
-//3
-//size - 2
+
 //1534
 //https://leetcode.cn/problems/count-good-triplets/?envType=study-plan-v2&envId=primers-list
 //#include<cmath>
@@ -192,6 +189,7 @@
 
 //709
 //https://leetcode.cn/problems/to-lower-case/solutions/1151839/zhuan-huan-cheng-xiao-xie-zi-mu-by-leetc-5e29/?envType=study-plan-v2&envId=primers-list
+//方法1
 //#include<algorithm>
 //class Solution {
 //public:
@@ -202,6 +200,54 @@
 //};
 
 
-//全转小写:ch |= 32
-//全转大写:ch &= -33(原理是32的补码(原码取反 + 1)再-1)
-//大小写对换(大写变小写,小写变大)ch ^= 32
+//方法2
+//#include<algorithm>
+//class Solution {
+//public:
+//    string toLowerCase(string s) {
+//        for (auto& ch : s)
+//        {
+//            ch = tolower(ch);
+//        }
+//        return s;
+//    }
+//};
+
+
+//258
+//class Solution 
+//{
+//public:
+//    int addDigits(int num) 
+//    {
+//        if (num < 10)
+//        {
+//            return num;
+//        }
+//        int sum = num / 10 + num % 10;
+//        while (sum >= 10)
+//        {
+//            sum = num / 10 + num % 10;
+//            num = sum;
+//        }
+//        return sum;
+//    }
+//};
+
+
+//1281
+//class Solution {
+//public:
+//    int subtractProductAndSum(int n) {
+//        int mul = 1;
+//        int sum = 0;
+//        while (n)
+//        {
+//            int g = n % 10;
+//            mul *= g;
+//            sum += g;
+//            n /= 10;
+//        }
+//        return (mul - sum);
+//    }
+//};
