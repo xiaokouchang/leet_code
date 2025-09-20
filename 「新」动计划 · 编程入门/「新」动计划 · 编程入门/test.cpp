@@ -215,6 +215,7 @@
 
 
 //258
+//https://leetcode.cn/problems/add-digits/description/
 //class Solution 
 //{
 //public:
@@ -236,6 +237,7 @@
 
 
 //1281
+//https://leetcode.cn/problems/subtract-the-product-and-sum-of-digits-of-an-integer/description/
 //class Solution {
 //public:
 //    int subtractProductAndSum(int n) {
@@ -251,3 +253,219 @@
 //        return (mul - sum);
 //    }
 //};
+
+
+//231.2
+//https://leetcode.cn/problems/power-of-two/description/?envType=study-plan-v2&envId=primers-list
+//方法1
+//class Solution {
+//public:
+//    bool isPowerOfTwo(int n) {
+//        if (n == 1)
+//        {
+//            return true;
+//        }
+//        if (n % 2 != 0 || n <= 0)
+//        {
+//            return false;
+//        }
+//        int temp = n;
+//        while (temp >= 2)
+//        {
+//            if (temp % 2 != 0)
+//            {
+//                return false;
+//            }
+//            temp /= 2;
+//        }
+//        return true;
+//    }
+//};
+
+
+//方法2
+//https://leetcode.cn/problems/power-of-two/solutions/796201/2de-mi-by-leetcode-solution-rny3/?envType=study-plan-v2&envId=primers-list
+//class Solution {
+//public:
+//    bool isPowerOfTwo(int n) {
+//        return n > 0 && (n & n - 1) == 0;
+//    }
+//};
+
+
+//方法3
+//https://leetcode.cn/problems/power-of-two/solutions/796201/2de-mi-by-leetcode-solution-rny3/?envType=study-plan-v2&envId=primers-list
+//class Solution {
+//public:
+//    bool isPowerOfTwo(int n) {
+//        return n > 0 && (n & -n) == 0;
+//    }
+//};
+
+
+//方法4
+//https://leetcode.cn/problems/power-of-two/solutions/796201/2de-mi-by-leetcode-solution-rny3/?envType=study-plan-v2&envId=primers-list
+//class Solution {
+//private:
+//    static constexpr int BIG = 1 << 30;
+//
+//public:
+//    bool isPowerOfTwo(int n) {
+//        return n > 0 && BIG % n == 0;
+//    }
+//};
+
+
+//326.3
+//https://leetcode.cn/problems/power-of-three/description/?envType=study-plan-v2&envId=primers-list
+//方法1
+//class Solution 
+//{
+//public:
+//    bool isPowerOfThree(int n) {
+//        if (n <= 0 || n == 2)
+//        {
+//            return false;
+//        }
+//        if (n == 1)
+//        {
+//            return true;
+//        }
+//        int temp = n;
+//        while (temp >= 3)
+//        {
+//            if (temp % 3 != 0)
+//            {
+//                return false;
+//            }
+//            temp /= 3;
+//        }
+//        if (temp == 1)
+//        {
+//            return true;
+//        }
+//        return false;
+//    }
+//};
+
+
+//方法2
+//class Solution {
+//public:
+//    bool isPowerOfThree(int n) {
+//        while (n && (n % 3 == 0))
+//        {
+//            n /= 3;
+//        }
+//        return n == 1;
+//    }
+//};
+
+
+//263.丑数
+//https://leetcode.cn/problems/ugly-number/description/?envType=study-plan-v2&envId=primers-list
+//方法1
+//class Solution {
+//public:
+//    bool isUgly(int n) {
+//        while (n >= 2)
+//        {
+//            if (n % 2 == 0)
+//            {
+//                n /= 2;
+//            }
+//            else if (n % 3 == 0)
+//            {
+//                n /= 3;
+//            }
+//            else if (n % 5 == 0)
+//            {
+//                n /= 5;
+//            }
+//            else
+//            {
+//                break;
+//            }
+//        }
+//        if (n == 2 || n == 1)
+//        {
+//            return true;
+//        }
+//        return false;
+//    }
+//};
+
+
+//方法2
+//2 3 5逐个进行判断
+//https://leetcode.cn/problems/ugly-number/solutions/3007807/li-yong-wei-yun-suan-you-hua-pythonjavac-nlqr/?envType=study-plan-v2&envId=primers-list
+//class Solution 
+//{
+//public:
+//    bool isUgly(int n) {
+//        if (n <= 0)
+//        {
+//            return false;
+//        }
+//        while (n % 3 == 0)
+//        {
+//            n /= 3;
+//        }
+//        while (n % 5 == 0)
+//        {
+//            n /= 5;
+//        }
+//        return (n & (n - 1)) == 0;
+//    }
+//};
+
+
+//1470.重新排列数组
+//https://leetcode.cn/problems/shuffle-the-array/description/?envType=study-plan-v2&envId=primers-list
+//方法1
+//class Solution {
+//public:
+//    vector<int> shuffle(vector<int>& nums, int n) {
+//        vector<int> vec;
+//        vec.reserve(2 * n);
+//        int n1 = 0;
+//        int n2 = n;
+//        int flag = 0;
+//        for (int i = 0; i < nums.size(); i++)
+//        {
+//            if (flag == 0)
+//            {
+//                vec.push_back(nums[n1]);
+//                n1++;
+//                flag = 1;
+//            }
+//            else
+//            {
+//                vec.push_back(nums[n2]);
+//                n2++;
+//                flag = 0;
+//            }
+//        }
+//        return vec;
+//    }
+//};
+
+
+//1470.重新排列数组
+//方法1
+//class Solution {
+//public:
+//    vector<int> shuffle(vector<int>& nums, int n) {
+//        vector<int> vec;
+//        vec.reserve(2 * n);
+//        for (int i = 0; i < nums.size() - n; i++)
+//        {
+//            vec.push_back(nums[i]);
+//            vec.push_back(nums[i + n]);
+//        }
+//        return vec;
+//    }
+//};
+
+
+//方法2
