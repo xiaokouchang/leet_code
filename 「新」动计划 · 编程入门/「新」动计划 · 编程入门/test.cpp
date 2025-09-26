@@ -469,3 +469,202 @@
 
 
 //方法2
+//class Solution {
+//public:
+//    vector<int> shuffle(vector<int>& nums, int n) {
+//        vector<int> vec;
+//        vec.reserve(2 * n);
+//        int n1 = 0;
+//        int n2 = n;
+//        int flag = 0;
+//        for (int i = 0;i < nums.size();i++)
+//        {
+//            if (flag == 0)
+//            {
+//                vec.push_back(nums[n1]);
+//                n1++;
+//                flag = 1;
+//            }
+//            else
+//            {
+//                vec.push_back(nums[n2]);
+//                n2++;
+//                flag = 0;
+//            }
+//        }
+//        return vec;
+//    }
+//};
+
+
+//867
+//https://leetcode.cn/problems/transpose-matrix/description/?envType=study-plan-v2&envId=primers-list
+//class Solution {
+//public:
+//    vector<vector<int>> transpose(vector<vector<int>>& matrix) {
+//        int row = matrix.size();
+//        int col = matrix[0].size();
+//        vector<vector<int>> vec(col, vector<int>(row, 0));
+//        for (int i = 0;i < row;i++)
+//        {
+//            for (int j = 0;j < col;j++)
+//            {
+//                vec[j][i] = matrix[i][j];
+//            }
+//        }
+//        return vec;
+//    }
+//};
+
+
+//1422
+//https://leetcode.cn/problems/maximum-score-after-splitting-a-string/?envType=study-plan-v2&envId=primers-list
+//方法1
+//#include<string>
+//#include<iostream>
+//using namespace std;
+//class Solution
+//{
+//public:
+//    int maxScore(string s)
+//    {
+//        int count = 0;
+//        int left = 0;
+//        int right = 1;
+//        string::iterator it = s.begin();
+//        while (it != s.end() && left < s.size() - 1)
+//        {
+//            int temp = 0;
+//            string s1(s, 0, left + 1);
+//            string s2(s, right, s.size() - left);
+//            for (int i = 0; i < left + 1; i++)
+//            {
+//                if (s[i] == '0')
+//                {
+//                    temp++;
+//                }
+//            }
+//            for (int j = right; j < s.size(); j++)
+//            {
+//                if (s[j] == '1')
+//                {
+//                    temp++;
+//                }
+//            }
+//            if (temp >= count)
+//            {
+//                count = temp;
+//            }
+//            left++;
+//            right++;
+//        }
+//        return count;
+//    }
+//};
+//int main()
+//{
+//    string s("011101");
+//    Solution sol;
+//    int ret = sol.maxScore(s);
+//    cout << ret << endl;
+//    return 0;
+//}
+
+
+//方法2
+//class Solution {
+//public:
+//    int maxScore(string s) {
+//        int ans = 0;
+//        for (int i = 1;i < s.size();i++)
+//        {
+//            int score = 0;
+//            for (int j = 0;j < i;j++)
+//            {
+//                if (s[j] == '0')
+//                {
+//                    score++;
+//                }
+//            }
+//            for (int j = i;j < s.size();j++)
+//            {
+//                if (s[j] == '1')
+//                {
+//                    score++;
+//                }
+//            }
+//            ans = max(score, ans);
+//        }
+//        return ans;
+//    }
+//};
+
+
+//方法3
+//#include<string>
+//#include<vector>
+//#include<iostream>
+//using namespace std;
+//class Solution {
+//public:
+//    bool Getword(char c)
+//    {
+//        static const char word[6] = { '0','a','e','i','o','u' };
+//        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u')
+//        {
+//            return true;
+//        }
+//        return false;
+//    }
+//    int vowelStrings(vector<string>& words, int left, int right) {
+//        int row = 0;
+//        int count = 0;
+//        for (row = 0;row < words.size();row++)
+//        {
+//            int col = words[row].size();
+//            if (Getword(words[row][0]))
+//            {
+//                if (Getword(words[row][col - 1]))
+//                {
+//                    count++;
+//                }
+//            }
+//        }
+//        return count;
+//    }
+//};
+//int main()
+//{
+//    vector<string> vec = { "are", "amy", "u" };
+//    Solution s;
+//    cout << s.vowelStrings(vec, 0, 2) << endl;
+//    return 0;
+//}
+
+
+//#include<string>
+//#include<vector>
+//#include<iostream>
+//using namespace std;
+//class Solution
+//{
+//public:
+//	void Print(vector<string>& str)
+//	{
+//		
+//		for (int i = 0;i < str.size();i++)
+//		{
+//			for (int j = 0;j < str[i].size();j++)
+//			{
+//				cout << str[i][j] << " ";
+//			}
+//			cout << endl;
+//		}
+//	}
+//};
+//int main()
+//{
+//	vector<string> vec = { "i", "i", "u" };
+//	Solution s;
+//	s.Print(vec);
+//}
