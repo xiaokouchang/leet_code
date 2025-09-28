@@ -601,17 +601,14 @@
 
 
 //·½·¨3
-//#include<string>
-//#include<vector>
-//#include<iostream>
-//using namespace std;
+
+
+//2586
+//https://leetcode.cn/problems/count-the-number-of-vowel-strings-in-range/description/?envType=study-plan-v2&envId=primers-list
 //class Solution {
 //public:
-//    bool Getword(char c)
-//    {
-//        static const char word[6] = { '0','a','e','i','o','u' };
-//        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u')
-//        {
+//    bool Getword(char c) {
+//        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
 //            return true;
 //        }
 //        return false;
@@ -619,13 +616,10 @@
 //    int vowelStrings(vector<string>& words, int left, int right) {
 //        int row = 0;
 //        int count = 0;
-//        for (row = 0;row < words.size();row++)
-//        {
-//            int col = words[row].size();
-//            if (Getword(words[row][0]))
-//            {
-//                if (Getword(words[row][col - 1]))
-//                {
+//        for (row = left; row <= right; row++) {
+//            int col = words[row].size() - 1;
+//            if (Getword(words[row][0])) {
+//                if (Getword(words[row][col])) {
 //                    count++;
 //                }
 //            }
@@ -633,38 +627,3 @@
 //        return count;
 //    }
 //};
-//int main()
-//{
-//    vector<string> vec = { "are", "amy", "u" };
-//    Solution s;
-//    cout << s.vowelStrings(vec, 0, 2) << endl;
-//    return 0;
-//}
-
-
-//#include<string>
-//#include<vector>
-//#include<iostream>
-//using namespace std;
-//class Solution
-//{
-//public:
-//	void Print(vector<string>& str)
-//	{
-//		
-//		for (int i = 0;i < str.size();i++)
-//		{
-//			for (int j = 0;j < str[i].size();j++)
-//			{
-//				cout << str[i][j] << " ";
-//			}
-//			cout << endl;
-//		}
-//	}
-//};
-//int main()
-//{
-//	vector<string> vec = { "i", "i", "u" };
-//	Solution s;
-//	s.Print(vec);
-//}
