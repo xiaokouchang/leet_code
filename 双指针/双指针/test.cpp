@@ -181,3 +181,74 @@
 //        }
 //    }
 //};
+
+
+
+//第202题
+//快乐数
+//https://leetcode.cn/problems/happy-number/
+//方法1
+//#include<math.h>
+//class Solution 
+//{
+//public:
+//    bool isHappy(int n) 
+//    {
+//        int count = 100;
+//        int flag = 1;
+//        while (count)
+//        {
+//            string str = to_string(n);
+//            int sum = 0;
+//            for (auto e : str)
+//            {
+//                int temp = e - '0';
+//                sum += pow(temp, 2);
+//            }
+//            n = sum;
+//            if (n == 1)
+//            {
+//                flag = 0;
+//                break;
+//            }
+//            count--;
+//        }
+//        if (flag == 0)
+//        {
+//            return true;
+//        }
+//        return false;
+//    }
+//};
+
+
+//第11题
+//盛最多水的容器
+//https://leetcode.cn/problems/container-with-most-water/description/
+//方法1
+//class Solution 
+//{
+//public:
+//    int maxArea(vector<int>& height) 
+//    {
+//        int left = 0;
+//        int n = height.size();
+//        int right = n - 1;
+//        int area = 0;
+//        int maxArea = 0;
+//        while (left < right)
+//        {
+//            area = (right - left) * min(height[left], height[right]);
+//            maxArea = max(area, maxArea);
+//            if (height[left] < height[right])
+//            {
+//                left++;
+//            }
+//            else
+//            {
+//                right--;
+//            }
+//        }
+//        return maxArea;
+//    }
+//};
