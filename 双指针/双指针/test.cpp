@@ -222,6 +222,34 @@
 //};
 
 
+//方法2
+//class Solution {
+//public:
+//    int SquareSum(int n) 
+//    {
+//        int sum = 0;
+//        while (n > 0)
+//        {
+//            int t = n % 10;
+//            sum += t * t;
+//            n = n / 10;
+//        }
+//        return sum;
+//    }
+//
+//    bool isHappy(int n) 
+//    {
+//        int slow = n, fast = n;
+//        do {
+//            slow = SquareSum(slow);
+//            fast = SquareSum(fast);
+//            fast = SquareSum(fast);
+//        } while (slow != fast);
+//        return slow == 1;
+//    }
+//};
+
+
 //第11题
 //盛最多水的容器
 //https://leetcode.cn/problems/container-with-most-water/description/
