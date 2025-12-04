@@ -280,3 +280,40 @@
 //        return maxArea;
 //    }
 //};
+
+
+//第611题
+//有效的三角形个数
+//https://leetcode.cn/problems/valid-triangle-number/
+//方法1
+//判断3次
+//方法2
+//已知三条边的大小顺序,只需让两条最短边大于第3条边s即可
+//class Solution 
+//{
+//public:
+//    int triangleNumber(vector<int>& nums) 
+//    {
+//        int k = 0;
+//        int count = 0;
+//        int n = nums.size();
+//        sort(nums.begin(), nums.end());
+//        for (int i = 0; i < n - 2; i++)
+//        {
+//            if (nums[i] == 0)
+//            {
+//                continue;
+//            }
+//            k = i + 2;
+//            for (int j = i + 1; j < n - 1; j++)
+//            {
+//                while (k<n && nums[i] + nums[j]>nums[k])
+//                {
+//                    k++;
+//                }
+//                count += k - 1 - j;
+//            }
+//        }
+//        return count;
+//    }
+//};
