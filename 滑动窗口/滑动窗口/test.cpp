@@ -33,6 +33,32 @@
 //};
 
 
+//第3题
+//无重复字符的最长子串
+//https://leetcode.cn/problems/longest-substring-without-repeating-characters/submissions/685477263/
+//class Solution 
+//{
+//public:
+//    int lengthOfLongestSubstring(string s) 
+//    {
+//        int n = s.size();
+//        string result;
+//        int max_size = 0;
+//        for (size_t i = 0; i < n; i++)
+//        {
+//            string::iterator p = find(result.begin(), result.end(), s[i]);
+//            if (p != result.end())
+//            {
+//                result.erase(result.begin(), p + 1);
+//            }
+//            result.push_back(s[i]);
+//            max_size = max((int)result.size(), max_size);
+//        }
+//        return max_size;
+//    }
+//};
+
+
 //第1004题
 //最大连续1的个数
 //https://leetcode.cn/problems/max-consecutive-ones-iii/
