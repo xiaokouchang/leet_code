@@ -91,3 +91,49 @@
 //        return maxLen;
 //    }
 //};
+
+
+//第1658题
+//https://leetcode.cn/problems/minimum-operations-to-reduce-x-to-zero/description/
+//将x减到0的最小操作数
+//class Solution 
+//{
+//public:
+//    int minOperations(vector<int>& nums, int x) 
+//    {
+//        int total = accumulate(nums.begin(), nums.end(), 0);
+//        int target = total - x;
+//        int n = nums.size();
+//        //总和小于x,不可能满足条件
+//        if (target < 0)
+//        {
+//            return -1;
+//        }
+//        //总和等于x,需要移除所有元素
+//        if (target == 0)
+//        {
+//            return n;
+//        }
+//        int left = 0;
+//        int current_sum = 0;
+//        int max_len = -1; //记录满足条件的最长子数组长度
+//        //滑动窗口找最长子数组和为target
+//        for (int right = 0; right < n; ++right) 
+//        {
+//            current_sum += nums[right];
+//            //窗口和超过target,收缩左边界
+//            while (current_sum > target && left <= right) 
+//            {
+//                current_sum -= nums[left];
+//                left++;
+//            }
+//            //找到和为target的子数组,更新最大长度
+//            if (current_sum == target) 
+//            {
+//                max_len = max(max_len, right - left + 1);
+//            }
+//        }
+//        //未找到满足条件的子数组,返回-1;否则返回n-max_len
+//        return max_len == -1 ? -1 : n - max_len;
+//    }
+//};
