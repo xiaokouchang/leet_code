@@ -44,11 +44,15 @@
 
 
 //1089
+//复写零
 //https://leetcode.cn/problems/duplicate-zeros/
 //方法1
-//class Solution {
+//right=-1;
+//class Solution 
+//{
 //public:
-//    void duplicateZeros(vector<int>& arr) {
+//    void duplicateZeros(vector<int>& arr) 
+//    {
 //        //先找到最后一个数
 //        int cur = 0;
 //        int dest = -1;
@@ -83,9 +87,100 @@
 
 
 //方法2
-//class Solution {
+//right=0;
+//class Solution
+//{
 //public:
-//    void duplicateZeros(vector<int>& arr) {
+//    void duplicateZeros(vector<int>& arr) 
+//    {
+//        int left = 0;
+//        int right = 0;
+//        int n = arr.size();
+//        // 找到最后一个数字
+//        while (left < n) 
+//        {
+//            if (arr[left] != 0) 
+//            {
+//                right++;
+//            }
+//            else 
+//            {
+//                right += 2;
+//            }
+//            if (right > n - 1) 
+//            {
+//                right--;
+//                break;
+//            }
+//            left++;
+//        }
+//        // 处理边界条件
+//        if (right >= n) 
+//        {
+//            arr[n - 1] = 0;
+//            left--;
+//            right -= 2;
+//        }
+//        while (left >= 0) 
+//        {
+//            if (arr[left] != 0) 
+//            {
+//                arr[right--] = arr[left--];
+//            }
+//            else 
+//            {
+//                arr[right--] = 0;
+//                arr[right--] = 0;
+//                left--;
+//            }
+//        }
+//    }
+//};
+
+
+//方法3
+//class Solution 
+//{
+//public:
+//    void duplicateZeros(vector<int>& arr)
+//    {
+//        int n = arr.size();
+//        int i = 0;
+//        int j = 0;
+//        while (j < n)
+//        {
+//            if (!arr[i])
+//            {
+//                j++;
+//            }
+//            j++;
+//            i++;
+//        }
+//        j--;
+//        i--;
+//        while (i >= 0)
+//        {
+//            if (j < n)
+//            {
+//                arr[j] = arr[i];
+//            }
+//            if (arr[i] == 0 && --j >= 0)//第1个为假,条件错误,不执行--j>=0
+//            {
+//                arr[j] = 0;
+//            }
+//            j--;
+//            i--;
+//        }
+//    }
+//};
+
+
+//方法4
+//class Solution 
+//{
+//public:
+//    void duplicateZeros(vector<int>& arr) 
+//    {
 //        int count = 0;//统计0的个数
 //        int n = arr.size();
 //        for (auto e : arr)
@@ -125,58 +220,118 @@
 //};
 
 
-//方法3
-//class Solution {
+//方法5
+//class Solution 
+//{
 //public:
-//    void duplicateZeros(vector<int>& arr) {
+//    void duplicateZeros(vector<int>& arr) 
+//    {
+//        int n = arr.size();
+//        int top = 0;
+//        int low = -1;
+//        while (top < n)
+//        {
+//            low++;
+//            if (arr[low] == 0)
+//            {
+//                top += 2;
+//            }
+//            else
+//            {
+//                top++;
+//            }
+//        }
+//        //处理边界
+//        int j = n - 1;
+//        if (top == n + 1)//最后一个位置为0,超出数组1个,修改位置
+//        {
+//            arr[j] = 0;//只需要填充1个0;
+//            //最后一个位置不需要填充
+//            j--;
+//            low--;
+//        }
+//        //填充元素
+//        while (j >= 0)
+//        {
+//            arr[j--] = arr[low];//无论是0还是非0元素都可以
+//            if (!arr[low])
+//            {
+//                arr[j--] = arr[low];//无论是0
+//            }
+//            low--;
+//        }
+//    }
+//};
+
+
+//方法6
+//class Solution 
+//{
+//public:
+//    void duplicateZeros(vector<int>& arr) 
+//    {
 //        int cur = 0;
 //        int dest = -1;
 //        int flag1 = 0;
 //        int flag2 = 0;
 //        int n = arr.size();
 //        // 1, 0, 2, 3, 0, 4, 5, 0
-//        while (dest < n) {
-//            if (dest + 1 >= n) {
+//        while (dest < n) 
+//        {
+//            if (dest + 1 >= n) 
+//            {
 //                flag2 = 1;
 //                break;
 //            }
-//            if (arr[cur] == 0) {
+//            if (arr[cur] == 0) 
+//            {
 //                // int temp = ;
-//                if (dest + 2 >= arr.size()) {
+//                if (dest + 2 >= arr.size()) 
+//                {
 //                    dest += 1;
 //                    flag1 = 1;
 //                }
-//                else {
+//                else 
+//                {
 //                    dest += 2;
 //                }
 //            }
-//            else {
+//            else 
+//            {
 //                dest += 1;
 //            }
-//            if (dest < n) {
+//            if (dest < n) 
+//            {
 //                cur += 1;
 //            }
 //        }
-//        while (cur > 0) {
+//        while (cur > 0) 
+//        {
 //            cur--;
-//            if (flag2 == 1) {
+//            if (flag2 == 1) 
+//            {
 //                flag2 = 0;
 //            }
-//            else {
+//            else 
+//            {
 //                dest--;
 //            }
-//            if (arr[cur] == 0) {
-//                if (flag1 == 1) {
+//            if (arr[cur] == 0) 
+//            {
+//                if (flag1 == 1) 
+//                {
 //                    arr[dest] = 0;
 //                    flag1 = 0;
 //                }
-//                else {
+//                else 
+//                {
 //                    arr[dest] = 0;
 //                    dest--;
 //                    arr[dest] = 0;
 //                }
 //            }
-//            else {
+//            else 
+//            {
 //                arr[dest] = arr[cur];
 //            }
 //        }
@@ -184,7 +339,7 @@
 //};
 
 
-//方法4
+//方法7
 //额外空间
 //class Solution {
 //public:
