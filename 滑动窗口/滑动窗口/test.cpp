@@ -192,3 +192,75 @@
 //        return max_len == -1 ? -1 : n - max_len;
 //    }
 //};
+
+
+//第904题
+//水果成篮
+//https://leetcode.cn/problems/fruit-into-baskets/
+//class Solution 
+//{
+//public:
+//    int totalFruit(vector<int>& fruits) 
+//    {
+//        // 边界处理1:数组为空或长度为0,返回0
+//        if (fruits.empty())
+//        {
+//            return 0;
+//        }
+//        int n = fruits.size();
+//        // 边界处理2:数组长度≤2,直接返回全部,避免后续逻辑异常
+//        if (n <= 2) 
+//        {
+//            return n;
+//        }
+//        int maxLen = 0;
+//        int left = 0; // 窗口左边界(有符号int,避免溢出)
+//        int type1 = fruits[0]; // 初始化第一种水果为数组第一个元素,避免-1带来的异常
+//        int type2 = -1; // 第二种水果初始化为-1(标记未初始化)
+//        int lastTypePos = 0; // 后一种水果的起始位置(初始为第一个元素下标)
+//        // 右指针遍历(全程有符号int,确保下标计算安全)
+//        for (int right = 0; right < n; ++right) 
+//        {
+//            int currFruit = fruits[right]; // 确保下标right在[0, n-1],无越界
+//            // 情况1:当前水果是窗口内已有的类型(type1或已初始化的type2)
+//            if (currFruit == type1 || (type2 != -1 && currFruit == type2)) 
+//            {
+//                // 仅当水果类型切换且右指针>0时,更新后一种水果的起始位置
+//                if (right > 0 && currFruit != fruits[right - 1]) 
+//                {
+//                    lastTypePos = right;
+//                }
+//            }
+//            // 情况2:当前水果是新类型,需要收缩窗口并更新水果类型
+//            else 
+//            {
+//                // 第一步:更新最大长度(收缩前的窗口为有效窗口)
+//                maxLen = max(maxLen, right - left);
+//                // 第二步:安全收缩左边界,确保left不小于0(杜绝负数下标)
+//                left = lastTypePos;
+//                if (left < 0) 
+//                {
+//                    left = 0;
+//                }
+//                // 第三步:更新窗口内的两种水果类型(保留最近的一种,新增当前水果）
+//                type1 = fruits[right - 1];
+//                type2 = currFruit;
+//                // 第四步:重置后一种水果的起始位置,确保为有效下标
+//                lastTypePos = right;
+//            }
+//            // 补充初始化:第二种水果尚未初始化时(仅执行一次)
+//            if (type2 == -1 && currFruit != type1) 
+//            {
+//                type2 = currFruit;
+//                lastTypePos = right;
+//            }
+//            // 计算当前窗口长度,更新最大长度(确保下标计算不溢出)
+//            int currWindowLen = right - left + 1;
+//            if (currWindowLen > maxLen) 
+//            {
+//                maxLen = currWindowLen;
+//            }
+//        }
+//        return maxLen;
+//    }
+//};
