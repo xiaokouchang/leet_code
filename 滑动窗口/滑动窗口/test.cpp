@@ -63,10 +63,14 @@
 //第3题
 //无重复字符的最长子串
 //https://leetcode.cn/problems/longest-substring-without-repeating-characters/submissions/685477263/
+//#include<algorithm>
+//#include<string>
+//#include<iostream>
+//using namespace std;
 //class Solution 
 //{
 //public:
-//    int lengthOfLongestSubstring(string s) 
+//    string& lengthOfLongestSubstring(string s) 
 //    {
 //        int n = s.size();
 //        string result;
@@ -79,11 +83,25 @@
 //                result.erase(result.begin(), p + 1);
 //            }
 //            result.push_back(s[i]);
-//            max_size = max((int)result.size(), max_size);
+//            if (result.size() > max_size)
+//            {
+//                max_size = max((int)result.size(), max_size);
+//                tmp = result;
+//            }
 //        }
-//        return max_size;
+//        return tmp;
 //    }
+//private:
+//    string tmp;
 //};
+//int main()
+//{
+//    string tmp("abcabcbb");
+//    Solution s;
+//    string ret = s.lengthOfLongestSubstring(tmp);
+//    cout << ret << endl;
+//    return 0;
+//}
 
 
 //第1004题
@@ -151,6 +169,7 @@
 //第1658题
 //https://leetcode.cn/problems/minimum-operations-to-reduce-x-to-zero/description/
 //将x减到0的最小操作数
+//方法1
 //class Solution 
 //{
 //public:
@@ -190,6 +209,204 @@
 //        }
 //        //未找到满足条件的子数组,返回-1;否则返回n-max_len
 //        return max_len == -1 ? -1 : n - max_len;
+//    }
+//};
+
+
+//方法2
+//total改变了方向,注意sum的初始化
+//class Solution 
+//{
+//public:
+//    int minOperations(vector<int>& nums, int x) 
+//    {
+//        int n = nums.size();
+//        int total = x - accumulate(nums.begin(), nums.end(), 0);
+//        if (total == 0) // 数组中所有数字加起来刚好等于x
+//        {
+//            return n;
+//        }
+//        if (total > 0) // 数组中所有数字加起来都小于x
+//        {
+//            return -1;
+//        }
+//        int max_len = -1;
+//        int sum = total;
+//        int left = 0;
+//        for (int right = 0; right < n; right++) 
+//        {
+//            sum += nums[right];
+//            while (sum > 0 && left <= right) 
+//            {
+//                sum -= nums[left];
+//                left++;
+//            }
+//            if (sum == 0) 
+//            {
+//                max_len = max(max_len, right - left + 1);
+//            }
+//        }
+//        return max_len == -1 ? -1 : n - max_len;
+//    }
+//};
+
+
+//方法3
+//不转化
+//贪心策略
+//#include <iostream>
+//#include <vector>
+//#include <climits> // 用于INT_MAX
+//using namespace std;
+//class Solution 
+//{
+//public:
+//    int minOperations(vector<int>& nums, int x) 
+//    {
+//        int n = nums.size();
+//        int left = 0; // 左指针:指向当前左侧待删除的下一个元素
+//        int right = n - 1; // 右指针:指向当前右侧待删除的下一个元素
+//        long long current_sum = 0; //当前首尾删除元素的总和,避免溢出
+//        int min_ops = INT_MAX; //最少操作次数,初始为极大值
+//        // 第一步:先贪心累加左侧元素,直到current_sum >= x 或 left越界
+//        while (left < n && current_sum < x) {
+//            current_sum += nums[left];
+//            left++; //left指向的是已删除左侧元素的下一个,已删除元素数为left
+//        }
+//        //情况1:左侧累加和恰好等于x,更新最少操作次数(仅删除左侧元素)
+//        if (current_sum == x) 
+//        {
+//            min_ops = left;
+//        }
+//        //第二步:回退左侧元素,同时累加右侧元素,寻找更优解(更少操作次数)
+//        while (left > 0) 
+//        {
+//            //回退左指针:减去最后一个左侧累加的元素,left左移一位
+//            left--;
+//            current_sum -= nums[left];
+//            //累加右侧元素,直到current_sum >= x 或 right < left(左右指针交叉,无元素可删)
+//            while (right >= left && current_sum < x) 
+//            {
+//                current_sum += nums[right];
+//                right--; //right指向的是已删除右侧元素的前一个,已删除元素数为(n-1)-right
+//            }
+//            //若当前和等于x,计算总操作次数并更新min_ops
+//            if (current_sum == x) 
+//            {
+//                int current_ops = left + (n - 1 - right); //左侧删除数+右侧删除数
+//                min_ops = min(min_ops, current_ops);
+//            }
+//        }
+//        //最终判断:是否找到有效解
+//        return (min_ops == INT_MAX) ? -1 : min_ops;
+//    }
+//};
+//// 测试示例
+//int main() {
+//    Solution s;
+//    // 示例1：nums = [1,1,4,2,3], x = 5 → 最少操作次数2（删除末尾2,3）
+//    vector<int> nums1 = { 1,1,4,2,3 };
+//    cout << "示例1结果：" << s.minOperations(nums1, 5) << endl;
+//
+//    // 示例2：nums = [3,2,20,1,1,3], x = 10 → 最少操作次数3（删除末尾3,1,1 或 开头3,2,5）
+//    vector<int> nums2 = { 3,2,20,1,1,3 };
+//    cout << "示例2结果：" << s.minOperations(nums2, 10) << endl;
+//
+//    // 示例3：无法满足条件 → 结果-1
+//    vector<int> nums3 = { 1,2,3 };
+//    cout << "示例3结果：" << s.minOperations(nums3, 10) << endl;
+//    return 0;
+//}
+
+
+//方法4
+//class Solution 
+//{
+//public:
+//    int minOperations(vector<int>& nums, int x) 
+//    {
+//        int n = nums.size();
+//        int right = n - 1;
+//        int sum = 0;
+//        // 先找到最长的后缀
+//        while (right >= 0 && sum + nums[right] <= x) 
+//        {
+//            sum += nums[right--];
+//        }
+//        if (sum < x && right == -1) // 数组所有数字全部相加小于x
+//        {
+//            return -1;
+//        }
+//        //后缀范围[right+1,n-1],长度为n-1-(right+1)+1=n-right-1
+//        int ret = sum == x ? n - right - 1 : INT_MAX;
+//        for (int left = 0; left < n; left++) 
+//        {
+//            sum += nums[left];
+//            // 缩小后缀长度,防止越界
+//            while (sum > x && right + 1 < n) 
+//            {
+//                right++;
+//                sum -= nums[right];
+//            }
+//            if (sum > x) 
+//            {
+//                break;
+//            }
+//            if (sum == x) 
+//            {
+//                //前缀范围[0,left],长度为left+1
+//                //前缀+后缀总长度为n-right-1+left+1=n-right+left
+//                ret = min(ret, n - right + left);
+//            }
+//        }
+//        return ret == INT_MAX ? -1 : ret;
+//    }
+//};
+
+
+//方法5
+//方法4的right改为n-1
+//class Solution 
+//{
+//public:
+//    int minOperations(vector<int>& nums, int x) 
+//    {
+//        int n = nums.size();
+//        int right = n;
+//        int sum = 0;
+//        // 先找到最长的后缀
+//        while (right >= 0 && sum + nums[right - 1] <= x) 
+//        {
+//            right--;
+//            sum += nums[right--];
+//        }
+//        if (sum < x && right == -1) // 数组所有数字全部相加小于x
+//        {
+//            return -1;
+//        }
+//        // 后缀范围[right,n-1],长度为n-1-right+1=n-right
+//        int ret = sum == x ? n - right : INT_MAX;
+//        for (int left = 0; left < n; left++) 
+//        {
+//            sum += nums[left];
+//            // 缩小后缀长度,防止越界
+//            while (sum > x && right + 1 < n) 
+//            {
+//                right++;
+//                sum -= nums[right];
+//            }
+//            if (sum > x) 
+//            {
+//                break;
+//            }
+//            if (sum == x) 
+//            {
+//                // 前缀范围[0,left],长度为left+1
+//                // 前缀+后缀总长度为n-right+left+1
+//                ret = min(ret, n - right + left + 1);
+//            }
+//        }
+//        return ret == INT_MAX ? -1 : ret;
 //    }
 //};
 
