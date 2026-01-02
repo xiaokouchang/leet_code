@@ -414,6 +414,7 @@
 //第904题
 //水果成篮
 //https://leetcode.cn/problems/fruit-into-baskets/
+//方法1
 //class Solution 
 //{
 //public:
@@ -479,5 +480,61 @@
 //            }
 //        }
 //        return maxLen;
+//    }
+//};
+
+
+//方法2
+//class Solution 
+//{
+//public:
+//    int totalFruit(vector<int>& fruits) 
+//    {
+//        int n = fruits.size();
+//        int ret = 0;
+//        int left = 0;//左边界
+//        int first = -1;//第1种水果的类型
+//        int cnt1 = 0;//第1种水果的数量
+//        int last = -1;//第2种水果的类型
+//        int cnt2 = 0;//第2种水果的数量
+//        for (int right = 0; right < n; right++)
+//        {
+//            if (fruits[right] == first)//当前为第1种水果
+//            {
+//                cnt1++;
+//            }
+//            else if (fruits[right] == last)//当前为第2种水果
+//            {
+//                cnt2++;
+//            }
+//            else
+//            {
+//                //移动窗口只剩下一种水果
+//                while (cnt1 != 0 && cnt2 != 0)
+//                {
+//                    if (fruits[left] == first)//窗口左边界为第1种水果
+//                    {
+//                        cnt1--;
+//                    }
+//                    else if (fruits[left] == last)//窗口左边界为第2种水果
+//                    {
+//                        cnt2--;
+//                    }
+//                    left++;
+//                }
+//                if (cnt1 == 0)
+//                {
+//                    first = fruits[right];
+//                    cnt1 = 1;
+//                }
+//                else
+//                {
+//                    last = fruits[right];
+//                    cnt2 = 1;
+//                }
+//            }
+//            ret = max(ret, cnt1 + cnt2);
+//        }
+//        return ret;
 //    }
 //};
