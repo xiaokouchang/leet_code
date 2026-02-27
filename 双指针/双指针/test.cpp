@@ -374,6 +374,67 @@
 //};
 
 
+#include<iostream>
+#include<vector>
+using namespace std;
+class Solution 
+{
+public:
+    void duplicateZeros(vector<int>& arr) 
+    {
+        int n = arr.size();
+        int left = 0;
+        int right = 0;
+        while (right < n)
+        {
+            if (arr[left++])
+            {
+                right++;
+            }
+            else
+            {
+                right += 2;
+            }
+            if (right + 1 >= n)
+            {
+                break;
+            }
+        }
+        //处理边界情况
+        if (arr[left] == 0)
+        {
+            right = n - 1;
+            arr[left] = 0;//处理最后一个元素
+            left--;
+        }
+        while (left >= 0 && right >= 0)
+        {
+            if (arr[left])
+            {
+                arr[right--] = arr[left--];
+            }
+            else
+            {
+                arr[right--] = 0;
+                arr[right--] = 0;
+                left--;
+            }
+        }
+    }
+};
+int main()
+{
+    Solution s;
+    vector<int> vec = { 0,1,7,6,0,2,0,7 };
+    s.duplicateZeros(vec);
+    for (auto e : vec)
+    {
+        cout << e << " " << endl;
+    }
+    return 0;
+}
+
+
 //第202题
 //快乐数
 //https://leetcode.cn/problems/happy-number/
