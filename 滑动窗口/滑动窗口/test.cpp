@@ -12,7 +12,7 @@
 //    {
 //        int n = nums.size();
 //        int sum = 0;
-//        int ret = nums.size();
+//        int ret = n;
 //        int left = 0;
 //        //右边扩张
 //        for (int right = 0; right < n; right++)
@@ -108,6 +108,10 @@
 //最大连续1的个数
 //https://leetcode.cn/problems/max-consecutive-ones-iii/
 //方法1
+//#include<algorithm>
+//#include<vector>
+//#include<iostream>
+//using namespace std;
 //class Solution 
 //{
 //public:
@@ -125,7 +129,7 @@
 //                zeroCount++;
 //            }
 //            //当0的数量超过k时,移动左指针缩小窗口
-//            while (zeroCount > k) 
+//            while (zeroCount >= k) 
 //            {
 //                if (nums[left] == 0) 
 //                {
