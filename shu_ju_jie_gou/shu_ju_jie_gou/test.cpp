@@ -287,6 +287,85 @@
 //};
 
 
+//链表的回文结构
+//https://www.nowcoder.com/practice/d281619e4b3e4a60a2cc66ea32855bfa?tpId=49&&tqId=29370&rp=1&ru=/activity/oj&qru=/ta/2016test/question-ranking
+//方法1
+//class PalindromeList
+//{
+//public:
+//    bool chkPalindrome(ListNode* A) 
+//    {
+//        if (A == nullptr)
+//        {
+//            return false;
+//        }
+//        // write code here
+//        ListNode* cur = A;
+//        stack<ListNode*> st;
+//        while (cur)
+//        {
+//            st.push(cur);
+//            cur = cur->next;
+//        }
+//        ListNode* tail = st.top();
+//        st.pop();
+//        cur = A;
+//        ListNode* slow = A;
+//        ListNode* fast = A;
+//        while (fast && fast->next)
+//        {
+//            slow = slow->next;
+//            fast = fast->next->next;
+//        }
+//        while (cur != slow && tail != slow)
+//        {
+//            if (cur->val != tail->val)
+//            {
+//                return false;
+//            }
+//            cur = cur->next;
+//            tail = st.top();
+//            st.pop();
+//        }
+//        return true;
+//    }
+//};
+
+
+//方法2
+//直接比较值
+//class PalindromeList
+//{
+//public:
+//    bool chkPalindrome(ListNode* A) 
+//{
+//        if (A == nullptr)
+//        {
+//            return false;
+//        }
+//        // write code here
+//        ListNode* cur = A;
+//        stack<int> st;
+//        while (cur)
+//        {
+//            st.push(cur->val);
+//            cur = cur->next;
+//        }
+//        cur = A;
+//        while (cur)
+//        {
+//            if (cur->val != st.top())
+//            {
+//                return false;
+//            }
+//            cur = cur->next;
+//            st.pop();
+//        }
+//        return true;
+//    }
+//};
+
+
 //链表的中间节点
 //https://leetcode.cn/problems/middle-of-the-linked-list/submissions/632809308/
 //方法1
@@ -476,6 +555,42 @@
 //            tail->next = lt2;
 //        }
 //        return head;
+//    }
+//};
+
+
+//链表分割
+//https://www.nowcoder.com/practice/0e27e0b064de4eacac178676ef9c9d70?tpId=8&&tqId=11004&rp=2&ru=/activity/oj&qru=/ta/cracking-the-coding-interview/question-ranking
+//class Partition 
+//{
+//public:
+//    ListNode* partition(ListNode* pHead, int x)
+//    {
+//        // write code here
+//        ListNode* lesshead = new ListNode(-1);
+//        ListNode* greathead = new ListNode(-1);
+//        ListNode* lesstail = lesshead;
+//        ListNode* greattail = greathead;
+//        ListNode* cur = pHead;
+//        while (cur)
+//        {
+//            if (cur->val < x)
+//            {
+//                lesstail->next = cur;
+//                lesstail = lesstail->next;
+//            }
+//            else {
+//                greattail->next = cur;
+//                greattail = greattail->next;
+//            }
+//            cur = cur->next;
+//        }
+//        lesstail->next = greathead->next;
+//        greattail->next = nullptr;
+//        ListNode* Head = lesshead->next;
+//        delete lesshead;
+//        delete greathead;
+//        return Head;
 //    }
 //};
 
