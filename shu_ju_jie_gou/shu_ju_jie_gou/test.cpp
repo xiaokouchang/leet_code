@@ -413,6 +413,7 @@
 
 //链表倒数第k个节点
 //https://www.nowcoder.com/practice/529d3ae5a407492994ad2a246518148a?tpId=13&&tqId=11167&rp=2&ru=/activity/oj&qru=/ta/coding-interviews/question-ranking
+//方法1
 //class Solution 
 //{
 //public:
@@ -443,6 +444,37 @@
 //        }
 //        cur = st.top();
 //        return cur;
+//    }
+//};
+
+
+//方法2
+//class Solution 
+//{
+//public:
+//    ListNode* FindKthToTail(ListNode* pListHead, unsigned int k) 
+//    {
+//        if (pListHead == nullptr || k <= 0)
+//        {
+//            return nullptr;
+//        }
+//        ListNode* p = pListHead;
+//        ListNode* q = pListHead;
+//        while (k--)
+//        {
+//            //链表长度小于k
+//            if (p == nullptr)
+//            {
+//                return nullptr;
+//            }
+//            p = p->next;
+//        }
+//        while (p != nullptr)
+//        {
+//            p = p->next;
+//            q = q->next;
+//        }
+//        return q;
 //    }
 //};
 
@@ -595,8 +627,151 @@
 //};
 
 
+//链表的回文结构
+//https://www.nowcoder.com/practice/d281619e4b3e4a60a2cc66ea32855bfa?tpId=49&&tqId=29370&rp=1&ru=/activity/oj&qru=/ta/2016test/question-ranking
+//class PalindromeList 
+//{
+//public:
+//    ListNode* reverse(ListNode* A)
+//    {
+//        ListNode* cur = A;
+//        ListNode* curnext = nullptr;
+//        ListNode* tail = nullptr;
+//        while (cur)
+//        {
+//            curnext = cur->next;
+//            cur->next = tail;
+//            tail = cur;
+//            cur = curnext;
+//        }
+//        return tail;
+//    }
+//    ListNode* Middle(ListNode* A)
+//    {
+//        ListNode* fast = A;
+//        ListNode* slow = A;
+//        while (fast && fast->next)
+//        {
+//            fast = fast->next->next;
+//            slow = slow->next;
+//        }
+//        return slow;
+//    }
+//    bool chkPalindrome(ListNode* A) {
+//        // write code here
+//        ListNode* mid = Middle(A);
+//        ListNode* rev = reverse(mid);
+//        ListNode* cur = A;
+//        while (rev)
+//        {
+//            if (rev->val != cur->val)
+//            {
+//                return false;
+//            }
+//            rev = rev->next;
+//            cur = cur->next;
+//        }
+//        return true;
+//    }
+//};
+
+
+//输入两个链表,找出它们的第一个公共结点
+//https://leetcode.cn/problems/intersection-of-two-linked-lists/description/
+//方法1
+//class Solution {
+//public:
+//    ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) {
+//        if (headA == nullptr || headB == nullptr) {
+//            return nullptr;
+//        }
+//        ListNode* curA = headA;
+//        ListNode* curB = headB;
+//        int lena = 1;
+//        int lenb = 1;
+//        while (curA->next) {
+//            curA = curA->next;
+//            lena++;
+//        }
+//        while (curB->next) {
+//            curB = curB->next;
+//            lenb++;
+//        }
+//        if (curA != curB) {
+//            return nullptr;
+//        }
+//        int different = abs(lena - lenb);
+//        ListNode* longlist = headA;
+//        ListNode* shortlist = headB;
+//        if (lena < lenb) {
+//            longlist = headB;
+//            shortlist = headA;
+//        }
+//        while (different) {
+//            longlist = longlist->next;
+//            different--;
+//        }
+//        while (longlist != shortlist) {
+//            longlist = longlist->next;
+//            shortlist = shortlist->next;
+//        }
+//        return longlist;
+//    }
+//};
+
+
+//方法2
+//class Solution 
+//{
+//public:
+//    ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) 
+//    {
+//        if (headA == nullptr || headB == nullptr)
+//        {
+//            return nullptr;
+//        }
+//        ListNode* curA = headA;
+//        ListNode* curB = headB;
+//        while (curA != curB)
+//        {
+//            curA = curA == nullptr ? headB : curA->next;
+//            curB = curB == nullptr ? headA : curB->next;
+//        }
+//        return curA;
+//    }
+//};
+
+
 //142、环形链表2
 //https://leetcode.cn/problems/linked-list-cycle-ii/description/
+//方法1
+//class Solution {
+//public:
+//    ListNode* detectCycle(ListNode* head) {
+//        ListNode* slow = head;
+//        ListNode* fast = head;
+//        while (fast && fast->next)
+//        {
+//            fast = fast->next->next;
+//            slow = slow->next;
+//            if (slow == fast)
+//            {
+//                ListNode* meet = slow;
+//                ListNode* cur = head;
+//                while (meet != cur)
+//                {
+//                    meet = meet->next;
+//                    cur = cur->next;
+//                }
+//                return meet;
+//            }
+//        }
+//        return nullptr;
+//    }
+//};
+
+
+//方法2
 //class Solution 
 //{
 //public:
@@ -618,4 +793,352 @@
 //        }
 //        return nullptr;
 //    }
+//};
+
+
+//有效的括号
+//https://leetcode.cn/problems/valid-parentheses/
+//class Solution 
+//{
+//public:
+//    bool isValid(string s) 
+//    {
+//        int n = s.size();
+//        int i = 0;
+//        stack<char> st;
+//        for (i = 0; i < n; i++) 
+//        {
+//            if (s[i] == '(' || s[i] == '{' || s[i] == '[') 
+//            {
+//                st.push(s[i]);
+//            }
+//            else {
+//                if (st.size() == 0) 
+//                {
+//                    // 栈中只有右括号
+//                    return false;
+//                }
+//                char tmp = st.top();
+//                st.pop();
+//                if ((tmp == '{' && s[i] != '}') ||
+//                    (tmp == '[' && s[i] != ']') ||
+//                    (tmp == '(' && s[i] != ')')) 
+//                {
+//                    return false;
+//                }
+//            }
+//        }
+//        bool ret = st.empty();
+//        return ret;
+//    }
+//};
+
+
+//用队列实现栈
+//https://leetcode.cn/problems/implement-stack-using-queues/
+//方法1 --- 两个队列(正着放)
+//class MyStack 
+//{
+//public:
+//    MyStack() {}
+//    void push(int x) 
+//    { 
+//        _q1.push(x); 
+//    }
+//    int pop() 
+//    {
+//        int ret = 0;
+//        //将第1个队列除了最后一个元素之外全部导入第2个队列
+//        //删除第1个队列的最后一个元素
+//        //将第2个队列的元素导入第1个队列
+//        while (!_q1.empty()) 
+//        {
+//            if (_q1.size() == 1) 
+//            {
+//                ret = _q1.front();
+//                _q1.pop();
+//                break;
+//            }
+//            _q2.push(_q1.front());
+//            _q1.pop();
+//        }
+//        while (!_q2.empty()) 
+//        {
+//            _q1.push(_q2.front());
+//            _q2.pop();
+//        }
+//        return ret;
+//    }
+//    int top() 
+//    {
+//        //将第1个队列除了最后一个元素之外全部导入第2个队列
+//        //存下第1个队列的最后一个元素,并将这个元素导入第2个队列
+//        //将第2个队列的元素导入第1个队列
+//        int ret = 0;
+//        while (!_q1.empty()) 
+//        {
+//            if (_q1.size() == 1) 
+//            {
+//                ret = _q1.front();
+//            }
+//            _q2.push(_q1.front());
+//            _q1.pop();
+//        }
+//        while (!_q2.empty()) 
+//        {
+//            _q1.push(_q2.front());
+//            _q2.pop();
+//        }
+//        return ret;
+//    }
+//    bool empty() 
+//    { 
+//        return _q1.size() == 0; 
+//    }
+//private:
+//    queue<int> _q1;
+//    queue<int> _q2;
+//};
+
+
+//方法2 --- 两个队列(倒着放)
+//class MyStack 
+//{
+//public:
+//    MyStack() {}
+//    void push(int x)
+//    {
+//        _q2.push(x);
+//        while (!_q1.empty()) 
+//        {
+//            _q2.push(_q1.front());
+//            _q1.pop();
+//        }
+//        swap(_q1, _q2);
+//    }
+//    int pop() 
+//    {
+//        int ret = _q1.front();
+//        _q1.pop();
+//        return ret;
+//    }
+//    int top() 
+//    {
+//        int ret = _q1.front();
+//        return ret;
+//    }
+//    bool empty()
+//    { 
+//        return _q1.empty();
+//    }
+//private:
+//    queue<int> _q1;
+//    queue<int> _q2;
+//};
+
+
+//方法3
+//1个队列
+//class MyStack 
+//{
+//public:
+//    MyStack() 
+//    {}
+//    void push(int x) 
+//    {
+//        int n = _q.size();
+//        _q.push(x);
+//        int i = 0;
+//        for (i = 0; i < n; i++) 
+//        {
+//            _q.push(_q.front());
+//            _q.pop();
+//        }
+//    }
+//    int pop() 
+//    {
+//        int ret = _q.front();
+//        _q.pop();
+//        return ret;
+//    }
+//    int top() 
+//    {
+//        int ret = _q.front();
+//        return ret;
+//    }
+//    bool empty() 
+//    { 
+//        return _q.empty(); 
+//    }
+//private:
+//    queue<int> _q;
+//};
+
+
+//用栈实现队列
+//https://leetcode.cn/problems/implement-queue-using-stacks/submissions/717468460/
+//方法1
+//class MyQueue 
+//{
+//public:
+//    MyQueue() 
+//    {
+//
+//    }
+//    void push(int x) 
+//    {
+//        //将第1个栈的元素移到第2个栈
+//        while (!_st1.empty())
+//        {
+//            _st2.push(_st1.top());
+//            _st1.pop();
+//        }
+//        //第1个空栈插入元素
+//        _st1.push(x);
+//        //将第2个栈的元素移到第1个栈
+//        while (!_st2.empty())
+//        {
+//            _st1.push(_st2.top());
+//            _st2.pop();
+//        }
+//    }
+//    int pop() 
+//    {
+//        int ret = _st1.top();
+//        _st1.pop();
+//        return ret;
+//    }
+//    int peek() 
+//    {
+//        int ret = _st1.top();
+//        return ret;
+//    }
+//    bool empty() 
+//    {
+//        return _st1.empty();
+//    }
+//private:
+//    stack<int> _st1;
+//    stack<int> _st2;
+//};
+
+
+//方法2
+//class MyQueue 
+//{
+//public:
+//    MyQueue() {}
+//    void push(int x)
+//    { 
+//        _st1.push(x);
+//    }
+//    int pop() 
+//    {
+//        int ret = 0;
+//        while (!_st1.empty()) 
+//        {
+//            if (_st1.size() == 1)
+//            {
+//                ret = _st1.top();
+//                _st1.pop();
+//                break;
+//            }
+//            _st2.push(_st1.top());
+//            _st1.pop();
+//        }
+//        while (!_st2.empty()) 
+//        {
+//            _st1.push(_st2.top());
+//            _st2.pop();
+//        }
+//        return ret;
+//    }
+//    int peek()
+//    {
+//        int ret = 0;
+//        while (!_st1.empty()) 
+//        {
+//            if (_st1.size() == 1) 
+//            {
+//                ret = _st1.top();
+//            }
+//            _st2.push(_st1.top());
+//            _st1.pop();
+//        }
+//        while (!_st2.empty()) 
+//        {
+//            _st1.push(_st2.top());
+//            _st2.pop();
+//        }
+//        return ret;
+//    }
+//    bool empty() 
+//    { 
+//        return _st1.empty(); 
+//    }
+//private:
+//    stack<int> _st1;
+//    stack<int> _st2;
+//};
+
+
+//设计循环队列
+//https://leetcode.cn/problems/design-circular-queue/
+//class MyCircularQueue 
+//{
+//public:
+//    MyCircularQueue(int k) 
+//    {
+//        front = rear = 0;
+//        capacity = k + 1;
+//        arr = new int[capacity];
+//    }
+//    bool enQueue(int value) 
+//    {
+//        if (isFull())
+//        {
+//            return false;
+//        }
+//        arr[rear] = value;
+//        rear = (rear + 1) % capacity;
+//        return true;
+//    }
+//    bool deQueue() 
+//    {
+//        if (isEmpty())
+//        {
+//            return false;
+//        }
+//        front = (front + 1) % capacity;
+//        return true;
+//    }
+//    int Front() 
+//    {
+//        if (isEmpty())
+//        {
+//            return -1;
+//        }
+//        return arr[front];
+//    }
+//    int Rear() 
+//    {
+//        if (isEmpty())
+//        {
+//            return -1;
+//        }
+//        return arr[(rear + capacity - 1) % capacity];
+//    }
+//    bool isEmpty()
+//    {
+//        return rear == front;
+//    }
+//    bool isFull() 
+//    {
+//        return (rear + 1) % capacity == front;
+//    }
+//private:
+//    int* arr;
+//    int front;
+//    int rear;
+//    int capacity;
 //};
