@@ -104,6 +104,7 @@
 //}
 
 
+
 //第1004题
 //最大连续1的个数
 //https://leetcode.cn/problems/max-consecutive-ones-iii/
@@ -538,6 +539,75 @@
 //                }
 //            }
 //            ret = max(ret, cnt1 + cnt2);
+//        }
+//        return ret;
+//    }
+//};
+
+
+//方法3
+//class Solution
+//{
+//public:
+//    int totalFruit(vector<int>& fruits) 
+//    {
+//        int n = fruits.size();
+//        int left = 0;
+//        int right = 0;
+//        int maxsize = 0;
+//        unordered_map<int, int> umap;
+//        for (right = 0; right < n; right++)
+//        {
+//            umap[fruits[right]]++;
+//            while (umap.size() > 2) {
+//                umap[fruits[left]]--;
+//                if (umap[fruits[left]] == 0)
+//                {
+//                    umap.erase(fruits[left]);
+//                }
+//                left++;
+//            }
+//            maxsize = max(maxsize, right - left + 1);
+//        }
+//        return maxsize;
+//    }
+//};
+
+
+//438.找到字符串中所有字母异位词
+//方法1
+//class Solution 
+//{
+//public:
+//    vector<int> findAnagrams(string s, string p) 
+//    {
+//        int n = s.size();
+//        int m = p.size();
+//        int right = 0;
+//        vector<int> ret;
+//        unordered_map<int, int> umapr, umapp;
+//        for (auto e : p)
+//        {
+//            umapp[e]++;
+//        }
+//        for (right = 0; right < n; right++)
+//        {
+//            umapr[s[right]]++;
+//            if (right >= m)
+//            {
+//                umapr[s[right - m]]--;
+//                if (umapr[s[right - m]] == 0)
+//                {
+//                    umapr.erase(s[right - m]);
+//                }
+//            }
+//            if (right >= m - 1)
+//            {
+//                if (umapr == umapp)
+//                {
+//                    ret.push_back(right - m + 1);
+//                }
+//            }
 //        }
 //        return ret;
 //    }
